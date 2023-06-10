@@ -1,7 +1,7 @@
 import { IsDateString, IsString } from 'class-validator';
 import { Exclude, Expose } from 'class-transformer';
 
-class SignUpDto {
+class SignUpRequest {
   @IsString()
   @Expose()
   name!: string;
@@ -19,4 +19,4 @@ class SignUpDto {
   birthdate!: string;
 }
 
-export default SignUpDto;
+export default SignUpRequest;

@@ -1,9 +1,9 @@
-import { RequestWithUser } from '../interfaces/RequestWithUser';
 import { NextFunction, Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { AuthTokenData } from '../interfaces/AuthToken.interface';
-import { UserModel } from '../models/User.model';
-import InvalidAuthTokenException from '../exceptions/auth/InvalidAuthTokenException';
+import { AuthTokenData } from '../../interfaces/AuthToken.interface';
+import { UserModel } from '../../models/User.model';
+import InvalidAuthTokenException from '../../exceptions/authentication/InvalidAuthTokenException';
+import { RequestWithUser } from '../../interfaces/RequestWithUser';
 
 async function AuthTokenValidation(request: Request, response: Response, next: NextFunction) {
   const requestWithUser = request as RequestWithUser;

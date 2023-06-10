@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-class SignInDto {
+class SignInRequest {
   @IsString()
   email!: string;
 
@@ -8,4 +8,4 @@ class SignInDto {
   password!: string;
 }
 
-export default SignInDto;
+export default SignInRequest;

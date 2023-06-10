@@ -3,8 +3,11 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import Controller from 'interfaces/Controller.interface';
 import mongoose from 'mongoose';
-import errorMiddleware from './middleware/Error.middleware';
+import errorMiddleware from './middleware/error-handling/Error.middleware';
 import cookieParser from 'cookie-parser';
+import requestLogger from './middleware/logging/RequestLogger.middleware';
+import Logger from './helpers/Logger';
+import DatabaseConfig from './config/DatabaseConfig';
 
 class App {
   public app: express.Application;
@@ -23,6 +26,7 @@ class App {
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
     this.app.use(cookieParser());
+    this.app.use(requestLogger);
     this.app.use(helmet());
   }
 
@@ -37,13 +41,14 @@ class App {
   }
 
   private initializeDatabaseConnection() {
-    const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
-    mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}`);
+    mongoose.connect(
+      `mongodb+srv://${DatabaseConfig.user}:${DatabaseConfig.password}@${DatabaseConfig.path}`
+    );
   }
 
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`App listening on the port ${this.port}`);
+      Logger.info(`App listening on the port ${this.port}`);
     });
   }
 }

@@ -1,8 +1,8 @@
 import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
-import HttpException from '../exceptions/HttpException';
 import { RequestHandler } from 'express';
-import { HttpStatusCode } from '../exceptions/HttpStatusCode';
+import HttpException from '../../exceptions/HttpException';
+import { HttpStatusCode } from '../../exceptions/HttpStatusCode';
 
 function dtoValidation<T>(
   type: any,

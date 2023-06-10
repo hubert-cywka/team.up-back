@@ -1,8 +1,8 @@
 import { IsString } from 'class-validator';
 
-class CreateSportDto {
+class CreateSportDisciplineRequest {
   @IsString()
   public name!: string;
 }
 
-export default CreateSportDto;
+export default CreateSportDisciplineRequest;
