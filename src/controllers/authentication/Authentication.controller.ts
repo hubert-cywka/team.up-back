@@ -43,7 +43,7 @@ class AuthenticationController implements Controller {
       const authToken = await this.authenticationService.createAuthToken(authenticatedUser);
       const authCookie = this.authenticationService.createAuthCookie(authToken);
       response.setHeader('Set-Cookie', [authCookie]);
-      response.send(signInData);
+      response.send(authenticatedUser);
     } else {
       next(new InvalidCredentialsException());
     }

@@ -13,7 +13,7 @@ class AuthenticationService {
 
   constructor() {}
 
-  public async authenticateUser(userToAuthenticate: SignInRequest) {
+  public authenticateUser = async (userToAuthenticate: SignInRequest) => {
     const user = await this.userRepository.findUserByEmail(userToAuthenticate.email);
 
     if (user) {
@@ -26,9 +26,9 @@ class AuthenticationService {
     }
 
     return null;
-  }
+  };
 
-  public createAuthToken(user: User): AuthToken {
+  public createAuthToken = (user: User): AuthToken => {
     const timeToExpire = 60 * this.authTokenExpirationTime;
 
     const dataStoredInToken: AuthTokenData = {
@@ -41,11 +41,11 @@ class AuthenticationService {
         expiresIn: timeToExpire
       })
     };
-  }
+  };
 
-  public createAuthCookie(token: AuthToken) {
+  public createAuthCookie = (token: AuthToken) => {
     return `Authorization=${token.token}; HttpOnly; Path=/; Max-Age=${token.timeToExpire}`;
-  }
+  };
 }
 
 export default AuthenticationService;

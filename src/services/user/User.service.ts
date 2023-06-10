@@ -8,7 +8,7 @@ class UserService {
 
   constructor() {}
 
-  public async saveUser(userToSave: SignUpRequest) {
+  public saveUser = async (userToSave: SignUpRequest) => {
     const userWithThatEmail = await this.userRepository.findUsersByEmail(userToSave.email);
 
     if (userWithThatEmail.length) {
@@ -24,7 +24,7 @@ class UserService {
 
     createdUser.password = '';
     return createdUser;
-  }
+  };
 }
 
 export default UserService;
