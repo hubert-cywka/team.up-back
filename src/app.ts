@@ -9,6 +9,7 @@ import requestLogger from './middleware/logging/RequestLogger.middleware';
 import Logger from './helpers/Logger';
 import DatabaseConfig from './config/DatabaseConfig';
 import cors from 'cors';
+import ResourceNotFoundResponse from './helpers/ResourceNotFoundResponse';
 
 class App {
   public app: express.Application;
@@ -25,11 +26,11 @@ class App {
   }
 
   private initializeMiddlewares() {
-    this.app.use(bodyParser.json());
-    this.app.use(cookieParser());
     this.app.use(requestLogger);
     this.app.use(cors(this.getCorsSettings()));
     this.app.use(helmet());
+    this.app.use(bodyParser.json());
+    this.app.use(cookieParser());
   }
 
   private initializeControllers(controllers: Controller[]) {
@@ -39,6 +40,9 @@ class App {
   }
 
   private initializeErrorHandling() {
+    this.app.use((req, res, next) => {
+      next(new ResourceNotFoundResponse());
+    });
     this.app.use(errorMiddleware);
   }
 
