@@ -5,7 +5,8 @@ const UserSchema = new Schema({
   name: String,
   email: String,
   password: String,
-  birthdate: String
+  birthdate: String,
+  createdAt: String
 });
 
 export const UserModel = model<User>('User', UserSchema);

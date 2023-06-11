@@ -1,21 +1,22 @@
-import { IsDateString, IsString } from 'class-validator';
+import { IsDateString, IsEmail, IsNotEmpty, IsString } from 'class-validator'
 import { Exclude, Expose } from 'class-transformer';
 
 class SignUpRequest {
   @IsString()
-  @Expose()
+  @IsNotEmpty()
   name!: string;
 
-  @IsString()
-  @Expose()
+  @IsEmail()
+  @IsNotEmpty()
   email!: string;
 
   @IsString()
+  @IsNotEmpty()
   @Exclude({ toPlainOnly: true })
   password!: string;
 
   @IsDateString()
-  @Expose()
+  @IsNotEmpty()
   birthdate!: string;
 }
 
