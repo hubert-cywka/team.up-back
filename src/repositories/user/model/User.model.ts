@@ -21,7 +21,8 @@ const UserSchema = new Schema({
     type: String
   },
   createdAt: {
-    type: String
+    type: String,
+    default: new Date().toString()
   },
   role: {
     type: String,

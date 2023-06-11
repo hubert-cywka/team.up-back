@@ -9,7 +9,7 @@ module.exports = {
         const maybeAdmin = await collection.findOne({email: ApplicationConfig.adminEmail});
         if (!maybeAdmin) {
             const encryptedPassword = bcrypt.hash(ApplicationConfig.adminPassword, 10);
-            await collection.insertOne({name: 'Admin', email: ApplicationConfig.adminEmail, password: encryptedPassword, role: UserRole.ADMIN, birthdate: Date.now().toString()})
+            await collection.insertOne({name: 'Admin', email: ApplicationConfig.adminEmail, password: encryptedPassword, role: UserRole.ADMIN, birthdate: new Date().toString()})
         }
     },
 

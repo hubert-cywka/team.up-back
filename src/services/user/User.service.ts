@@ -22,7 +22,7 @@ class UserService {
     const createdUser = await this.userRepository.saveUser({
       ...userToSave,
       password: encryptedPassword,
-      createdAt: Date.now().toString(),
+      createdAt: new Date().toString(),
       role: UserRole.USER
     });
 
