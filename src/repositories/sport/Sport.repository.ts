@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
-import { SportDiscipline } from '../../interfaces/SportDiscipline.interface';
-import { SportDisciplineModel } from '../../models/SportDiscipline.model';
-import CreateSportDisciplineRequest from '../../controllers/sport/dto/CreateDisciplineRequest.dto';
+import { SportDiscipline } from '../../types/sports/SportDiscipline.interface';
+import { SportDisciplineModel } from './model/SportDiscipline.model';
+import { SaveSportDiscipline } from '../../services/sport/dto/SaveSportDiscipline';
 
 class SportRepository {
   private sportDisciplineModel: Model<SportDiscipline> = SportDisciplineModel;
@@ -20,14 +20,11 @@ class SportRepository {
     return this.sportDisciplineModel.find({ name: name });
   };
 
-  public saveSportDiscipline = async (disciplineToSave: CreateSportDisciplineRequest) => {
+  public saveSportDiscipline = async (disciplineToSave: SaveSportDiscipline) => {
     return this.sportDisciplineModel.create(disciplineToSave);
   };
 
-  public updateSportDisciplineById = async (
-    id: string,
-    disciplineToSave: CreateSportDisciplineRequest
-  ) => {
+  public updateSportDisciplineById = async (id: string, disciplineToSave: SaveSportDiscipline) => {
     return this.sportDisciplineModel.findByIdAndUpdate(id, disciplineToSave, { new: true });
   };
 

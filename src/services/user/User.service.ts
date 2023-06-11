@@ -1,6 +1,8 @@
 import * as bcrypt from 'bcrypt';
-import SignUpRequest from '../../controllers/authentication/dto/SignUpRequest.dto';
 import UserRepository from '../../repositories/user/User.repository';
+import { SaveUser } from './dto/SaveUser';
+import { UserRole } from '../../types/users/UserRole';
+import SignUpRequestBody from '../../controllers/authentication/dto/SignUpRequestBody.dto';
 
 class UserService {
   private userRepository = new UserRepository();
@@ -8,7 +10,7 @@ class UserService {
 
   constructor() {}
 
-  public saveUser = async (userToSave: SignUpRequest) => {
+  public saveUser = async (userToSave: SignUpRequestBody) => {
     const userWithThatEmail = await this.userRepository.findUsersByEmail(userToSave.email);
 
     if (userWithThatEmail.length) {
@@ -19,7 +21,9 @@ class UserService {
 
     const createdUser = await this.userRepository.saveUser({
       ...userToSave,
-      password: encryptedPassword
+      password: encryptedPassword,
+      createdAt: Date.now().toString(),
+      role: UserRole.USER
     });
 
     createdUser.password = '';

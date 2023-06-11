@@ -1,12 +1,12 @@
-import CreateSportDisciplineRequest from '../../controllers/sport/dto/CreateDisciplineRequest.dto';
 import SportRepository from '../../repositories/sport/Sport.repository';
+import { SaveSportDiscipline } from './dto/SaveSportDiscipline';
 
 class SportService {
   private sportRepository = new SportRepository();
 
   constructor() {}
 
-  public saveSportDiscipline = async (disciplineToSave: CreateSportDisciplineRequest) => {
+  public saveSportDiscipline = async (disciplineToSave: SaveSportDiscipline) => {
     const disciplinesWithGivenName = await this.sportRepository.findSportDisciplinesByName(
       disciplineToSave.name
     );
@@ -20,7 +20,7 @@ class SportService {
 
   public updateSportDisciplineById = async (
     id: string,
-    disciplineToUpdate: CreateSportDisciplineRequest
+    disciplineToUpdate: SaveSportDiscipline
   ) => {
     const foundDiscipline = this.sportRepository.findSportDisciplineById(id);
 

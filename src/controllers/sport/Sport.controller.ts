@@ -1,14 +1,16 @@
-import { NextFunction, Router, Response, Request } from 'express';
-import Controller from '../../interfaces/Controller.interface';
+import { NextFunction, Request, Response, Router } from 'express';
+import Controller from '../../types/controllers/Controller.interface';
 import authTokenValidationMiddleware from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateSportDisciplineRequest from './dto/CreateDisciplineRequest.dto';
-import { SportDiscipline } from '../../interfaces/SportDiscipline.interface';
-import { HttpStatusCode } from '../../exceptions/HttpStatusCode';
-import SportDisciplineNotFoundException from '../../exceptions/sport/SportDisciplineNotFoundException';
+import { SportDiscipline } from '../../types/sports/SportDiscipline.interface';
+import { HttpStatusCode } from '../../helpers/HttpStatusCode';
+import SportDisciplineNotFoundResponse from './dto/SportDisciplineNotFoundResponse';
 import SportService from '../../services/sport/Sport.service';
-import SportDisciplineAlreadyExistsException from '../../exceptions/sport/SportDisciplineAlreadyExistsException';
+import SportDisciplineAlreadyExistsResponse from './dto/SportDisciplineAlreadyExistsResponse';
 import SportRepository from '../../repositories/sport/Sport.repository';
+import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
+import { UserRole } from '../../types/users/UserRole';
 
 class SportController implements Controller {
   public path = '/sports';
@@ -22,23 +24,25 @@ class SportController implements Controller {
 
   public initializeRoutes() {
     this.router.get(this.path, this.getAllSportDisciplines);
-    this.router.delete(
-      this.path.concat('/:id'),
-      authTokenValidationMiddleware,
-      this.deleteSportDiscipline
-    );
     this.router.post(
       this.path,
       authTokenValidationMiddleware,
+      authorizationValidation([UserRole.ADMIN]),
       dtoValidation(CreateSportDisciplineRequest),
       this.createSportDiscipline
     );
-    this.router.put(
-      this.path.concat('/:id'),
-      authTokenValidationMiddleware,
-      dtoValidation(CreateSportDisciplineRequest),
-      this.updateSportDiscipline
-    );
+    this.router
+      .all(
+        this.path.concat('/:id'),
+        authTokenValidationMiddleware,
+        authorizationValidation([UserRole.ADMIN])
+      )
+      .put(
+        this.path.concat('/:id'),
+        dtoValidation(CreateSportDisciplineRequest),
+        this.updateSportDiscipline
+      )
+      .delete(this.path.concat('/:id'), this.deleteSportDiscipline);
   }
 
   createSportDiscipline = async (request: Request, response: Response, next: NextFunction) => {
@@ -47,7 +51,7 @@ class SportController implements Controller {
     if (createdSportDiscipline) {
       response.send(createdSportDiscipline);
     } else {
-      next(new SportDisciplineAlreadyExistsException());
+      next(new SportDisciplineAlreadyExistsResponse());
     }
   };
 
@@ -57,7 +61,7 @@ class SportController implements Controller {
     if (deletedDiscipline) {
       response.sendStatus(HttpStatusCode.OK);
     } else {
-      next(new SportDisciplineNotFoundException());
+      next(new SportDisciplineNotFoundResponse());
     }
   };
 
@@ -70,7 +74,7 @@ class SportController implements Controller {
     if (updatedDiscipline) {
       response.send(updatedDiscipline);
     } else {
-      next(new SportDisciplineNotFoundException());
+      next(new SportDisciplineNotFoundResponse());
     }
   };
 

@@ -1,33 +1,28 @@
 import { NextFunction, Response, Request } from 'express';
-import * as jwt from 'jsonwebtoken';
-import { AuthTokenData } from '../../interfaces/AuthToken.interface';
-import { UserModel } from '../../models/User.model';
-import InvalidAuthTokenException from '../../exceptions/authentication/InvalidAuthTokenException';
-import { RequestWithUser } from '../../interfaces/RequestWithUser';
+import InvalidAuthTokenResponse from '../../controllers/authentication/dto/InvalidAuthTokenResponse';
+import { RequestBodyWithUser } from '../../types/users/RequestBodyWithUser.interface';
+import AuthenticationService from '../../services/authentication/Authentication.service';
 
 async function AuthTokenValidation(request: Request, response: Response, next: NextFunction) {
-  const requestWithUser = request as RequestWithUser;
-  const authorizationCookie = requestWithUser.cookies.Authorization;
+  const requestWithUser = request as RequestBodyWithUser;
+  const authorizationCookie: string = requestWithUser.cookies.Authorization;
+  const authenticationService = new AuthenticationService();
 
   if (authorizationCookie) {
-    const secret = process.env.JWT_SECRET!;
-
     try {
-      const verificationResponse = jwt.verify(authorizationCookie, secret) as AuthTokenData;
-      const userId = verificationResponse._id;
-      const maybeUser = await UserModel.findById(userId);
+      const maybeUser = await authenticationService.getUserFromToken(authorizationCookie);
 
       if (maybeUser) {
         requestWithUser.user = maybeUser;
         next();
       } else {
-        next(new InvalidAuthTokenException());
+        next(new InvalidAuthTokenResponse());
       }
     } catch (e) {
-      next(new InvalidAuthTokenException());
+      next(new InvalidAuthTokenResponse());
     }
   } else {
-    next(new InvalidAuthTokenException());
+    next(new InvalidAuthTokenResponse());
   }
 }
 

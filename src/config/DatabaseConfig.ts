@@ -10,7 +10,5 @@ if (!MONGO_USER || !MONGO_PASSWORD || !MONGO_PATH) {
 }
 
 export default {
-  user: MONGO_USER,
-  password: MONGO_PASSWORD,
-  path: MONGO_PATH
+  connectionPath: `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}`
 };

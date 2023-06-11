@@ -12,12 +12,17 @@
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "migrate:create": "sh -c 'ts-node node_modules/.bin/migrate-mongo create $0 -f migrate-mongo-config.ts' ",
+    "migrate:status": "ts-node node_modules/.bin/migrate-mongo status -f migrate-mongo-config.ts",
+    "migrate:undo-last": "ts-node node_modules/.bin/migrate-mongo down -f migrate-mongo-config.ts && npm run migrate:status",
+    "migrate": "ts-node node_modules/migrate-mongo/bin/migrate-mongo up -f migrate-mongo-config.ts"
   },
   "keywords": [],
   "author": "Hubert Cywka",
   "license": "ISC",
   "dependencies": {
+    "@types/migrate-mongo": "^10.0.0",
     "@types/morgan": "^1.9.4",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
@@ -28,6 +33,8 @@
     "express": "^4.18.2",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
+    "migrate-mongo": "^10.0.0",
+    "mongodb": "^5.6.0",
     "mongoose": "^7.2.3",
     "morgan": "^1.10.0",
     "winston": "^3.9.0"

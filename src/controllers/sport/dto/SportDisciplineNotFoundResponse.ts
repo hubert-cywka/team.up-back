@@ -1,9 +1,9 @@
-import HttpException from '../HttpException';
+import ErrorResponse from '../../../helpers/ErrorResponse';
 
-class SportDisciplineNotFoundException extends HttpException {
+class SportDisciplineNotFoundResponse extends ErrorResponse {
   constructor() {
     super(404, 'Sport discipline not found.');
   }
 }
 
-export default SportDisciplineNotFoundException;
+export default SportDisciplineNotFoundResponse;

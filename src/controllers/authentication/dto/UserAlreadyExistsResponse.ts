@@ -1,10 +1,10 @@
-import HttpException from '../HttpException';
-import { HttpStatusCode } from '../HttpStatusCode';
+import ErrorResponse from '../../../helpers/ErrorResponse';
+import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
 
-class UserAlreadyExistsException extends HttpException {
+class UserAlreadyExistsResponse extends ErrorResponse {
   constructor() {
     super(HttpStatusCode.CONFLICT, 'User with that email already exists.');
   }
 }
 
-export default UserAlreadyExistsException;
+export default UserAlreadyExistsResponse;

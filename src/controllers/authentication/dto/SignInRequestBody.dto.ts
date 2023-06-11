@@ -1,6 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-class SignInRequest {
+class SignInRequestBody {
   @IsEmail()
   @IsNotEmpty()
   email!: string;
@@ -10,4 +10,4 @@ class SignInRequest {
   password!: string;
 }
 
-export default SignInRequest;
+export default SignInRequestBody;

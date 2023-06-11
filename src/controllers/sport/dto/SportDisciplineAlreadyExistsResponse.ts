@@ -1,9 +1,9 @@
-import HttpException from '../HttpException';
+import ErrorResponse from '../../../helpers/ErrorResponse';
 
-class SportDisciplineAlreadyExistsException extends HttpException {
+class SportDisciplineAlreadyExistsResponse extends ErrorResponse {
   constructor() {
     super(409, 'This sport discipline already exists.');
   }
 }
 
-export default SportDisciplineAlreadyExistsException;
+export default SportDisciplineAlreadyExistsResponse;

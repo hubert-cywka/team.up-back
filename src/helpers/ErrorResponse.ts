@@ -1,7 +1,7 @@
 import { Error } from 'mongoose';
 import { HttpStatusCode } from './HttpStatusCode';
 
-class HttpException extends Error {
+class ErrorResponse extends Error {
   status: HttpStatusCode;
   message: string;
 
@@ -12,4 +12,4 @@ class HttpException extends Error {
   }
 }
 
-export default HttpException;
+export default ErrorResponse;

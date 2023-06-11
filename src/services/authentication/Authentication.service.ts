@@ -1,9 +1,9 @@
-import { User } from '../../interfaces/User.interface';
-import { AuthToken, AuthTokenData } from '../../interfaces/AuthToken.interface';
+import { User } from '../../types/users/User.interface';
+import { AuthToken, AuthTokenData } from '../../types/token/AuthToken.interface';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import TokensConfig from '../../config/TokensConfig';
-import SignInRequest from '../../controllers/authentication/dto/SignInRequest.dto';
+import SignInRequestBody from '../../controllers/authentication/dto/SignInRequestBody.dto';
 import UserRepository from '../../repositories/user/User.repository';
 
 class AuthenticationService {
@@ -13,7 +13,7 @@ class AuthenticationService {
 
   constructor() {}
 
-  public authenticateUser = async (userToAuthenticate: SignInRequest) => {
+  public authenticateUser = async (userToAuthenticate: SignInRequestBody) => {
     const user = await this.userRepository.findUserByEmail(userToAuthenticate.email);
 
     if (user) {
@@ -45,6 +45,14 @@ class AuthenticationService {
 
   public createAuthCookie = (token: AuthToken) => {
     return `Authorization=${token.token}; HttpOnly; Path=/; Max-Age=${token.timeToExpire}`;
+  };
+
+  public getUserFromToken = async (authorizationCookie: string) => {
+    const verificationResponse = jwt.verify(
+      authorizationCookie,
+      TokensConfig.secret
+    ) as AuthTokenData;
+    return this.userRepository.findUserById(verificationResponse._id);
   };
 }
 

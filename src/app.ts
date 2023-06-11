@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-import Controller from 'interfaces/Controller.interface';
+import Controller from 'types/controllers/Controller.interface';
 import mongoose from 'mongoose';
 import errorMiddleware from './middleware/error-handling/Error.middleware';
 import cookieParser from 'cookie-parser';
@@ -41,9 +41,7 @@ class App {
   }
 
   private initializeDatabaseConnection() {
-    mongoose.connect(
-      `mongodb+srv://${DatabaseConfig.user}:${DatabaseConfig.password}@${DatabaseConfig.path}`
-    );
+    mongoose.connect(DatabaseConfig.connectionPath);
   }
 
   public listen() {

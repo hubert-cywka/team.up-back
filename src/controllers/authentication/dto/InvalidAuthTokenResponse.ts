@@ -1,10 +1,10 @@
-import HttpException from '../HttpException';
-import { HttpStatusCode } from '../HttpStatusCode';
+import ErrorResponse from '../../../helpers/ErrorResponse';
+import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
 
-class InvalidAuthTokenException extends HttpException {
+class InvalidAuthTokenResponse extends ErrorResponse {
   constructor() {
     super(HttpStatusCode.UNAUTHORIZED, 'Authorization token is invalid');
   }
 }
 
-export default InvalidAuthTokenException;
+export default InvalidAuthTokenResponse;

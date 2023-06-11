@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import Controller from '../../interfaces/Controller.interface';
+import Controller from '../../types/controllers/Controller.interface';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
-import SignUpRequest from './dto/SignUpRequest.dto';
-import SignInRequest from './dto/SignInRequest.dto';
-import InvalidCredentialsException from '../../exceptions/user/InvalidCredentialsException';
+import SignUpRequestBody from './dto/SignUpRequestBody.dto';
+import SignInRequestBody from './dto/SignInRequestBody.dto';
+import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse';
 import AuthenticationService from '../../services/authentication/Authentication.service';
-import UserAlreadyExistsException from '../../exceptions/user/UserAlreadyExistsException';
+import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
 import UserService from '../../services/user/User.service';
+import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
+import { UserRole } from '../../types/users/UserRole';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -19,24 +21,32 @@ class AuthenticationController implements Controller {
   }
 
   public initializeRoutes() {
-    this.router.post(this.path.concat('/register'), dtoValidation(SignUpRequest), this.signUpUser);
-    this.router.post(this.path.concat('/login'), dtoValidation(SignInRequest), this.signInUser);
-    this.router.post(this.path.concat('/logout'), this.signOutUser);
+    this.router.post(
+      this.path.concat('/register'),
+      dtoValidation(SignUpRequestBody),
+      this.signUpUser
+    );
+    this.router.post(this.path.concat('/login'), dtoValidation(SignInRequestBody), this.signInUser);
+    this.router.post(
+      this.path.concat('/logout'),
+      authorizationValidation([UserRole.USER, UserRole.ADMIN]),
+      this.signOutUser
+    );
   }
 
   signUpUser = async (request: Request, response: Response, next: NextFunction) => {
-    const signUpData: SignUpRequest = request.body;
+    const signUpData: SignUpRequestBody = request.body;
     const createdUser = await this.userService.saveUser(signUpData);
 
     if (createdUser) {
       response.send(createdUser);
     } else {
-      next(new UserAlreadyExistsException());
+      next(new UserAlreadyExistsResponse());
     }
   };
 
   signInUser = async (request: Request, response: Response, next: NextFunction) => {
-    const signInData: SignInRequest = request.body;
+    const signInData: SignInRequestBody = request.body;
     const authenticatedUser = await this.authenticationService.authenticateUser(signInData);
 
     if (authenticatedUser) {
@@ -45,7 +55,7 @@ class AuthenticationController implements Controller {
       response.setHeader('Set-Cookie', [authCookie]);
       response.send(authenticatedUser);
     } else {
-      next(new InvalidCredentialsException());
+      next(new InvalidCredentialsResponse());
     }
   };
 

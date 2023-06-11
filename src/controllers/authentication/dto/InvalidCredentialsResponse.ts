@@ -1,10 +1,10 @@
-import HttpException from '../HttpException';
-import { HttpStatusCode } from '../HttpStatusCode';
+import ErrorResponse from '../../../helpers/ErrorResponse';
+import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
 
-class InvalidCredentialsException extends HttpException {
+class InvalidCredentialsResponse extends ErrorResponse {
   constructor() {
     super(HttpStatusCode.UNAUTHORIZED, 'Invalid credentials.');
   }
 }
 
-export default InvalidCredentialsException;
+export default InvalidCredentialsResponse;

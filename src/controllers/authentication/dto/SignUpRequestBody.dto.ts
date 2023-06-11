@@ -1,7 +1,7 @@
-import { IsDateString, IsEmail, IsNotEmpty, IsString } from 'class-validator'
-import { Exclude, Expose } from 'class-transformer';
+import { IsDateString, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Exclude } from 'class-transformer';
 
-class SignUpRequest {
+class SignUpRequestBody {
   @IsString()
   @IsNotEmpty()
   name!: string;
@@ -20,4 +20,4 @@ class SignUpRequest {
   birthdate!: string;
 }
 
-export default SignUpRequest;
+export default SignUpRequestBody;
