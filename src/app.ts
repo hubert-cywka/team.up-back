@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import requestLogger from './middleware/logging/RequestLogger.middleware';
 import Logger from './helpers/Logger';
 import DatabaseConfig from './config/DatabaseConfig';
+import cors from 'cors';
 
 class App {
   public app: express.Application;
@@ -27,6 +28,7 @@ class App {
     this.app.use(bodyParser.json());
     this.app.use(cookieParser());
     this.app.use(requestLogger);
+    this.app.use(cors(this.getCorsSettings()));
     this.app.use(helmet());
   }
 
@@ -42,6 +44,15 @@ class App {
 
   private initializeDatabaseConnection() {
     mongoose.connect(DatabaseConfig.connectionPath);
+  }
+
+  private getCorsSettings() {
+      return {
+        origin: '*',
+        optionsSuccessStatus: 200,
+        methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET'],
+        allowedHeaders: '*'
+      }
   }
 
   public listen() {
