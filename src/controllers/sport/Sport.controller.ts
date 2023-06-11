@@ -78,7 +78,7 @@ class SportController implements Controller {
     }
   };
 
-  getAllSportDisciplines = async (request: Request, response: Response) => {
+  getAllSportDisciplines = async (request: Request, response: Response, next: NextFunction) => {
     const sportDisciplines: SportDiscipline[] = await this.sportRepository.findAll();
     response.send(sportDisciplines);
   };

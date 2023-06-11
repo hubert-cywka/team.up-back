@@ -1,8 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
+import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
 
 class SportDisciplineNotFoundResponse extends ErrorResponse {
   constructor() {
-    super(404, 'Sport discipline not found.');
+    super(HttpStatusCode.NOT_FOUND, 'Sport discipline not found.');
   }
 }
 

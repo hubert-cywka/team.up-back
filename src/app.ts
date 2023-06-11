@@ -47,12 +47,12 @@ class App {
   }
 
   private getCorsSettings() {
-      return {
-        origin: '*',
-        optionsSuccessStatus: 200,
-        methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET'],
-        allowedHeaders: '*'
-      }
+    return {
+      origin: '*',
+      optionsSuccessStatus: 200,
+      methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET'],
+      allowedHeaders: '*'
+    };
   }
 
   public listen() {
