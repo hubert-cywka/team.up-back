@@ -1,7 +1,8 @@
-import { IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 class CreateSportDisciplineRequest {
   @IsString()
+  @IsNotEmpty()
   public name!: string;
 }
 

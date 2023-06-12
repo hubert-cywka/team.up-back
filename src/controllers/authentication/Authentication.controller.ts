@@ -7,8 +7,6 @@ import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse';
 import AuthenticationService from '../../services/authentication/Authentication.service';
 import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
 import UserService from '../../services/user/User.service';
-import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
-import { UserRole } from '../../types/users/UserRole';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -27,11 +25,7 @@ class AuthenticationController implements Controller {
       this.signUpUser
     );
     this.router.post(this.path.concat('/login'), dtoValidation(SignInRequestBody), this.signInUser);
-    this.router.post(
-      this.path.concat('/logout'),
-      authorizationValidation([UserRole.USER, UserRole.ADMIN]),
-      this.signOutUser
-    );
+    this.router.post(this.path.concat('/logout'), this.signOutUser);
   }
 
   signUpUser = async (request: Request, response: Response, next: NextFunction) => {
@@ -39,7 +33,7 @@ class AuthenticationController implements Controller {
     const createdUser = await this.userService.saveUser(signUpData);
 
     if (createdUser) {
-      response.send(createdUser);
+      response.send(this.userService.prepareUserDetailsFromUser(createdUser));
     } else {
       next(new UserAlreadyExistsResponse());
     }
@@ -50,10 +44,10 @@ class AuthenticationController implements Controller {
     const authenticatedUser = await this.authenticationService.authenticateUser(signInData);
 
     if (authenticatedUser) {
-      const authToken = await this.authenticationService.createAuthToken(authenticatedUser);
+      const authToken = this.authenticationService.createAuthToken(authenticatedUser);
       const authCookie = this.authenticationService.createAuthCookie(authToken);
       response.setHeader('Set-Cookie', [authCookie]);
-      response.send(authenticatedUser);
+      response.send(this.userService.prepareUserDetailsFromUser(authenticatedUser));
     } else {
       next(new InvalidCredentialsResponse());
     }

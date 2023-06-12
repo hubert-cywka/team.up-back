@@ -1,14 +1,26 @@
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/User.repository';
-import { SaveUser } from './dto/SaveUser';
 import { UserRole } from '../../types/users/UserRole';
 import SignUpRequestBody from '../../controllers/authentication/dto/SignUpRequestBody.dto';
+import { User } from '../../types/users/User.interface';
+import UserDetailsResponse from '../../controllers/user/dto/UserDetailsResponse.dto';
 
 class UserService {
   private userRepository = new UserRepository();
   private PASSWORD_ENCRYPTION_SALT = 10;
 
   constructor() {}
+
+  public prepareUserDetailsFromUser = (user: User) => {
+    return new UserDetailsResponse(user._id, user.name, user.email, user.role);
+  };
+
+  public prepareAllUsersDetails = async () => {
+    const users = await this.userRepository.findAllUsers();
+    return users.map((user) => {
+      return this.prepareUserDetailsFromUser(user);
+    });
+  };
 
   public saveUser = async (userToSave: SignUpRequestBody) => {
     const userWithThatEmail = await this.userRepository.findUsersByEmail(userToSave.email);
@@ -19,15 +31,16 @@ class UserService {
 
     const encryptedPassword = await bcrypt.hash(userToSave.password, this.PASSWORD_ENCRYPTION_SALT);
 
-    const createdUser = await this.userRepository.saveUser({
+    return await this.userRepository.saveUser({
       ...userToSave,
       password: encryptedPassword,
       createdAt: new Date().toString(),
       role: UserRole.USER
     });
+  };
 
-    createdUser.password = '';
-    return createdUser;
+  public setUserRole = async (userId: string, role: UserRole) => {
+    return await this.userRepository.setUserRoleById(userId, role);
   };
 }
 

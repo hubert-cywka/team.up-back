@@ -1,10 +1,11 @@
 import { NextFunction, Response, Request } from 'express';
 import InvalidAuthTokenResponse from '../../controllers/authentication/dto/InvalidAuthTokenResponse';
-import { RequestBodyWithUser } from '../../types/users/RequestBodyWithUser.interface';
 import AuthenticationService from '../../services/authentication/Authentication.service';
+import Logger from '../../helpers/Logger';
+import { RequestWithUser } from '../../types/users/RequestWithUser.interface';
 
-async function AuthTokenValidation(request: Request, response: Response, next: NextFunction) {
-  const requestWithUser = request as RequestBodyWithUser;
+async function authTokenValidation(request: Request, response: Response, next: NextFunction) {
+  const requestWithUser = request as RequestWithUser;
   const authorizationCookie: string = requestWithUser.cookies.Authorization;
   const authenticationService = new AuthenticationService();
 
@@ -26,4 +27,4 @@ async function AuthTokenValidation(request: Request, response: Response, next: N
   }
 }
 
-export default AuthTokenValidation;
+export default authTokenValidation;

@@ -3,7 +3,6 @@ import Controller from '../../types/controllers/Controller.interface';
 import authTokenValidationMiddleware from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateSportDisciplineRequest from './dto/CreateDisciplineRequest.dto';
-import { SportDiscipline } from '../../types/sports/SportDiscipline.interface';
 import { HttpStatusCode } from '../../helpers/HttpStatusCode';
 import SportDisciplineNotFoundResponse from './dto/SportDisciplineNotFoundResponse';
 import SportService from '../../services/sport/Sport.service';
@@ -79,8 +78,7 @@ class SportController implements Controller {
   };
 
   getAllSportDisciplines = async (request: Request, response: Response, next: NextFunction) => {
-    const sportDisciplines: SportDiscipline[] = await this.sportRepository.findAll();
-    response.send(sportDisciplines);
+    response.send(await this.sportRepository.findAll());
   };
 }
 

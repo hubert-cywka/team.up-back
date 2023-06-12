@@ -35,7 +35,7 @@ class App {
 
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach((controller: Controller) => {
-      this.app.use('/', controller.router);
+      this.app.use('/api/', controller.router);
     });
   }
 
@@ -54,7 +54,7 @@ class App {
     return {
       origin: '*',
       optionsSuccessStatus: 200,
-      methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET'],
+      methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET', 'PATCH'],
       allowedHeaders: '*'
     };
   }

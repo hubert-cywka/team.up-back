@@ -20,12 +20,13 @@ class AuthenticationService {
       const isPasswordMatching = await bcrypt.compare(userToAuthenticate.password, user.password);
 
       if (isPasswordMatching) {
-        user.password = '';
         return user;
+      } else {
+        return null;
       }
+    } else {
+      return null;
     }
-
-    return null;
   };
 
   public createAuthToken = (user: User): AuthToken => {
