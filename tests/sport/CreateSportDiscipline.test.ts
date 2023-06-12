@@ -13,14 +13,37 @@ describe('Testing create sport discipline use case', () => {
       await UseCase.registerAndLoginAs(UseCase.admin, UseCase.ADMIN_EMAIL, UserRole.ADMIN);
     });
 
-    it(`should return ${HTTPStatus.OK} with added discipline if discipline does not exist`, async () => {
-      const saveRequest: CreateSportDisciplineRequest = { name: UseCase.SPORT_DISCIPLINE.name };
-      await UseCase.admin.post(UseCase.PATH_SPORTS).send(saveRequest).expect(HTTPStatus.OK);
+    it(`should return ${HTTPStatus.OK} if discipline does not exist yet`, async () => {
+      await UseCase.admin
+        .post(UseCase.PATH_SPORTS)
+        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
+        .expect(HTTPStatus.OK);
+    });
+
+    it(`should save discipline if it does not exist yet`, async () => {
+      const saveRequest: CreateSportDisciplineRequest = { name: 'Football' };
+      await UseCase.admin.post(UseCase.PATH_SPORTS).send(saveRequest);
+
+      const createdDiscipline = await UseCase.findInCollection(UseCase.SPORTS_COLLECTION, {
+        name: 'Football'
+      });
+
+      expect(createdDiscipline).toBeTruthy();
     });
 
     it(`should return ${HTTPStatus.CONFLICT} if discipline already exists`, async () => {
-      const saveRequest: CreateSportDisciplineRequest = { name: UseCase.SPORT_DISCIPLINE.name };
-      await UseCase.admin.post(UseCase.PATH_SPORTS).send(saveRequest).expect(HTTPStatus.CONFLICT);
+      await UseCase.admin
+        .post(UseCase.PATH_SPORTS)
+        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
+        .expect(HTTPStatus.CONFLICT);
+    });
+
+    it(`should not save discipline if it already exists`, async () => {
+      const countBefore = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      await UseCase.admin.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST);
+
+      const countAfter = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      expect(countAfter).toBe(countBefore);
     });
 
     it(`should return ${HTTPStatus.BAD_REQUEST} when request does not have necessary fields`, async () => {
@@ -45,8 +68,17 @@ describe('Testing create sport discipline use case', () => {
     });
 
     it(`should always return ${HTTPStatus.FORBIDDEN}`, async () => {
-      const saveRequest: CreateSportDisciplineRequest = { name: UseCase.SPORT_DISCIPLINE.name };
-      await UseCase.user.post(UseCase.PATH_SPORTS).send(saveRequest).expect(HTTPStatus.FORBIDDEN);
+      await UseCase.user
+        .post(UseCase.PATH_SPORTS)
+        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
+        .expect(HTTPStatus.FORBIDDEN);
+    });
+
+    it(`should never save to database`, async () => {
+      const countBefore = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      await UseCase.user.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST);
+      const countAfter = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      expect(countAfter).toBe(countBefore);
     });
   });
 
@@ -56,11 +88,17 @@ describe('Testing create sport discipline use case', () => {
     });
 
     it(`should always return ${HTTPStatus.UNAUTHORIZED}`, async () => {
-      const saveRequest: CreateSportDisciplineRequest = { name: UseCase.SPORT_DISCIPLINE.name };
       await UseCase.user
         .post(UseCase.PATH_SPORTS)
-        .send(saveRequest)
+        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
         .expect(HTTPStatus.UNAUTHORIZED);
+    });
+
+    it(`should never save to database`, async () => {
+      const countBefore = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      await UseCase.user.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST);
+      const countAfter = await UseCase.getCollectionLength(UseCase.SPORTS_COLLECTION);
+      expect(countAfter).toBe(countBefore);
     });
   });
 });
