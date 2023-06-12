@@ -6,10 +6,12 @@ import { User } from '../../types/users/User.interface';
 import UserDetailsResponse from '../../controllers/user/dto/UserDetailsResponse.dto';
 
 class UserService {
-  private userRepository = new UserRepository();
+  private userRepository: UserRepository;
   private PASSWORD_ENCRYPTION_SALT = 10;
 
-  constructor() {}
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository;
+  }
 
   public prepareUserDetailsFromUser = (user: User) => {
     return new UserDetailsResponse(user._id, user.name, user.email, user.role);

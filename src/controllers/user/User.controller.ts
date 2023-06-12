@@ -12,9 +12,10 @@ import ChangeRoleRequest from './dto/ChangeRoleRequest.dto';
 class UserController implements Controller {
   public path = '/users';
   public router = Router();
-  private userService = new UserService();
+  private userService: UserService;
 
-  constructor() {
+  constructor(userService: UserService) {
+    this.userService = userService;
     this.initializeRoutes();
   }
 

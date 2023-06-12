@@ -7,11 +7,13 @@ import SignInRequestBody from '../../controllers/authentication/dto/SignInReques
 import UserRepository from '../../repositories/user/User.repository';
 
 class AuthenticationService {
-  private userRepository = new UserRepository();
+  private userRepository: UserRepository;
   private readonly authTokenExpirationTime = TokensConfig.timeToExpire;
   private readonly authTokenSecret = TokensConfig.secret;
 
-  constructor() {}
+  constructor(userRepository: UserRepository) {
+    this.userRepository = userRepository;
+  }
 
   public authenticateUser = async (userToAuthenticate: SignInRequestBody) => {
     const user = await this.userRepository.findUserByEmail(userToAuthenticate.email);

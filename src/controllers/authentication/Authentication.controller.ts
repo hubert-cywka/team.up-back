@@ -11,10 +11,12 @@ import UserService from '../../services/user/User.service';
 class AuthenticationController implements Controller {
   public path = '/auth';
   public router = Router();
-  private authenticationService = new AuthenticationService();
-  private userService = new UserService();
+  private authenticationService: AuthenticationService;
+  private userService: UserService;
 
-  constructor() {
+  constructor(authenticationService: AuthenticationService, userService: UserService) {
+    this.authenticationService = authenticationService;
+    this.userService = userService;
     this.initializeRoutes();
   }
 

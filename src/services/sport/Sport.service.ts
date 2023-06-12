@@ -2,9 +2,11 @@ import SportRepository from '../../repositories/sport/Sport.repository';
 import { SaveSportDiscipline } from './dto/SaveSportDiscipline';
 
 class SportService {
-  private sportRepository = new SportRepository();
+  private sportRepository: SportRepository;
 
-  constructor() {}
+  constructor(sportRepository: SportRepository) {
+    this.sportRepository = sportRepository;
+  }
 
   public saveSportDiscipline = async (disciplineToSave: SaveSportDiscipline) => {
     const disciplinesWithGivenName = await this.sportRepository.findSportDisciplinesByName(

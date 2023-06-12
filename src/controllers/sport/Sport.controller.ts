@@ -14,10 +14,12 @@ import { UserRole } from '../../types/users/UserRole';
 class SportController implements Controller {
   public path = '/sports';
   public router = Router();
-  private sportService = new SportService();
-  private sportRepository = new SportRepository();
+  private sportService: SportService;
+  private sportRepository: SportRepository;
 
-  constructor() {
+  constructor(sportService: SportService, sportRepository: SportRepository) {
+    this.sportService = sportService;
+    this.sportRepository = sportRepository;
     this.initializeRoutes();
   }
 
