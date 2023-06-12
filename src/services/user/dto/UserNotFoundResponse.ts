@@ -1,9 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
 class UserNotFoundResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.NOT_FOUND, 'User not found.');
+    super(HTTPStatus.NOT_FOUND, 'User not found.');
   }
 }
 

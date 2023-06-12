@@ -3,7 +3,7 @@ import Controller from '../../types/controllers/Controller.interface';
 import authTokenValidationMiddleware from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateSportDisciplineRequest from './dto/CreateDisciplineRequest.dto';
-import { HttpStatusCode } from '../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../helpers/HTTPStatus';
 import SportDisciplineNotFoundResponse from './dto/SportDisciplineNotFoundResponse';
 import SportService from '../../services/sport/Sport.service';
 import SportDisciplineAlreadyExistsResponse from './dto/SportDisciplineAlreadyExistsResponse';
@@ -60,7 +60,7 @@ class SportController implements Controller {
     const deletedDiscipline = await this.sportService.deleteSportDisciplineById(request.params.id);
 
     if (deletedDiscipline) {
-      response.sendStatus(HttpStatusCode.OK);
+      response.sendStatus(HTTPStatus.OK);
     } else {
       next(new SportDisciplineNotFoundResponse());
     }

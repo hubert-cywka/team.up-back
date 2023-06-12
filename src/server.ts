@@ -14,9 +14,9 @@ require('express-async-errors');
 const userRepository = new UserRepository();
 const sportRepository = new SportRepository();
 
-const userService = new UserService(userRepository);
-const authenticationService = new AuthenticationService(userRepository);
-const sportService = new SportService(sportRepository);
+export const userService = new UserService(userRepository);
+export const authenticationService = new AuthenticationService(userRepository);
+export const sportService = new SportService(sportRepository);
 
 const app = new App(
   [
@@ -28,3 +28,5 @@ const app = new App(
 );
 
 app.listen();
+
+module.exports = app.app;

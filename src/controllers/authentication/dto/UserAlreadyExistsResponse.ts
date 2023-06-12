@@ -1,9 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
 class UserAlreadyExistsResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.CONFLICT, 'User with that email already exists.');
+    super(HTTPStatus.CONFLICT, 'User with that email already exists.');
   }
 }
 

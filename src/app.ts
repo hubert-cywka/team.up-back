@@ -47,7 +47,12 @@ class App {
   }
 
   private initializeDatabaseConnection() {
-    mongoose.connect(DatabaseConfig.connectionPath);
+    const { NODE_ENV } = process.env;
+    if (NODE_ENV === 'test') {
+      mongoose.connect(DatabaseConfig.testConnectionPath);
+    } else {
+      mongoose.connect(DatabaseConfig.connectionPath);
+    }
   }
 
   private getCorsSettings() {

@@ -2,7 +2,7 @@ import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { RequestHandler } from 'express';
 import ErrorResponse from '../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../helpers/HTTPStatus';
 
 function dtoValidation<T>(
   type: any,
@@ -16,7 +16,7 @@ function dtoValidation<T>(
         const message = errors
           .map((error: ValidationError) => Object.values(error.constraints ?? ''))
           .join(', ');
-        next(new ErrorResponse(HttpStatusCode.BAD_REQUEST, message));
+        next(new ErrorResponse(HTTPStatus.BAD_REQUEST, message));
       } else {
         next();
       }

@@ -1,9 +1,9 @@
 import ErrorResponse from './ErrorResponse';
-import { HttpStatusCode } from './HttpStatusCode';
+import { HTTPStatus } from './HTTPStatus';
 
 class ResourceNotFoundResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.NOT_FOUND, 'Resource not found.');
+    super(HTTPStatus.NOT_FOUND, 'Resource not found.');
   }
 }
 

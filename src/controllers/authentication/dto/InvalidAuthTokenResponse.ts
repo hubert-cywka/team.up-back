@@ -1,9 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
 class InvalidAuthTokenResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.UNAUTHORIZED, 'Authorization token is invalid');
+    super(HTTPStatus.UNAUTHORIZED, 'Authorization token is invalid');
   }
 }
 

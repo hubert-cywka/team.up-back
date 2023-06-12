@@ -1,11 +1,11 @@
 import { Error } from 'mongoose';
-import { HttpStatusCode } from './HttpStatusCode';
+import { HTTPStatus } from './HTTPStatus';
 
 class ErrorResponse extends Error {
-  status: HttpStatusCode;
+  status: HTTPStatus;
   message: string;
 
-  constructor(status: HttpStatusCode, message: string) {
+  constructor(status: HTTPStatus, message: string) {
     super(message);
     this.status = status;
     this.message = message;

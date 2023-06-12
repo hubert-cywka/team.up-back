@@ -1,9 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
 class SportDisciplineAlreadyExistsResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.CONFLICT, 'This sport discipline already exists.');
+    super(HTTPStatus.CONFLICT, 'This sport discipline already exists.');
   }
 }
 

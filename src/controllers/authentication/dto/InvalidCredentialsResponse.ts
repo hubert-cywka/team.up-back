@@ -1,9 +1,9 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HttpStatusCode } from '../../../helpers/HttpStatusCode';
+import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
 class InvalidCredentialsResponse extends ErrorResponse {
   constructor() {
-    super(HttpStatusCode.UNAUTHORIZED, 'Invalid credentials.');
+    super(HTTPStatus.UNAUTHORIZED, 'Invalid credentials.');
   }
 }
 
