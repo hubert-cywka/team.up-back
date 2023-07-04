@@ -21,11 +21,7 @@ class AuthenticationController implements Controller {
   }
 
   public initializeRoutes() {
-    this.router.post(
-      this.path.concat('/register'),
-      dtoValidation(SignUpRequestBody),
-      this.signUpUser
-    );
+    this.router.post(this.path.concat('/register'), dtoValidation(SignUpRequestBody), this.signUpUser);
     this.router.post(this.path.concat('/login'), dtoValidation(SignInRequestBody), this.signInUser);
     this.router.post(this.path.concat('/logout'), this.signOutUser);
   }

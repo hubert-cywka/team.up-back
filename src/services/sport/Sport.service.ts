@@ -8,38 +8,37 @@ class SportService {
     this.sportRepository = sportRepository;
   }
 
-  public saveSportDiscipline = async (disciplineToSave: SaveSportDiscipline) => {
-    const disciplinesWithGivenName = await this.sportRepository.findSportDisciplinesByName(
-      disciplineToSave.name
-    );
+  public existsById = async (id: string) => {
+    const maybeDiscipline = this.sportRepository.findById(id);
+    return !!maybeDiscipline;
+  };
 
-    if (disciplinesWithGivenName.length) {
-      return null;
+  public existsByName = async (name: string) => {
+    const maybeDiscipline = this.sportRepository.findAllByName(name);
+    return !!maybeDiscipline;
+  };
+
+  public save = async (disciplineToSave: SaveSportDiscipline) => {
+    if (!(await this.existsByName(disciplineToSave.name))) {
+      return await this.sportRepository.save(disciplineToSave);
     } else {
-      return await this.sportRepository.saveSportDiscipline(disciplineToSave);
+      return null;
     }
   };
 
-  public updateSportDisciplineById = async (
-    id: string,
-    disciplineToUpdate: SaveSportDiscipline
-  ) => {
-    const foundDiscipline = this.sportRepository.findSportDisciplineById(id);
-
-    if (!foundDiscipline) {
+  public updateById = async (id: string, disciplineToUpdate: SaveSportDiscipline) => {
+    if (!(await this.existsById(id))) {
       return null;
     } else {
-      return await this.sportRepository.updateSportDisciplineById(id, disciplineToUpdate);
+      return this.sportRepository.updateById(id, disciplineToUpdate);
     }
   };
 
-  public deleteSportDisciplineById = async (id: string) => {
-    const foundDiscipline = this.sportRepository.findSportDisciplineById(id);
-
-    if (!foundDiscipline) {
+  public deleteById = async (id: string) => {
+    if (!(await this.existsById(id))) {
       return null;
     } else {
-      return await this.sportRepository.deleteSportDisciplineById(id);
+      return this.sportRepository.deleteById(id);
     }
   };
 }

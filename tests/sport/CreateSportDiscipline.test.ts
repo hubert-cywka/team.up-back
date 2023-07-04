@@ -14,10 +14,7 @@ describe('Testing create sport discipline use case', () => {
     });
 
     it(`should return ${HTTPStatus.OK} if discipline does not exist yet`, async () => {
-      await UseCase.admin
-        .post(UseCase.PATH_SPORTS)
-        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
-        .expect(HTTPStatus.OK);
+      await UseCase.admin.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST).expect(HTTPStatus.OK);
     });
 
     it(`should save discipline if it does not exist yet`, async () => {
@@ -47,17 +44,11 @@ describe('Testing create sport discipline use case', () => {
     });
 
     it(`should return ${HTTPStatus.BAD_REQUEST} when request does not have necessary fields`, async () => {
-      await UseCase.admin
-        .post(UseCase.PATH_SPORTS)
-        .send({ invalid: 'INVALID' })
-        .expect(HTTPStatus.BAD_REQUEST);
+      await UseCase.admin.post(UseCase.PATH_SPORTS).send({ invalid: 'INVALID' }).expect(HTTPStatus.BAD_REQUEST);
     });
 
     it(`should return ${HTTPStatus.BAD_REQUEST} when name is empty`, async () => {
-      await UseCase.admin
-        .post(UseCase.PATH_SPORTS)
-        .send({ name: '' })
-        .expect(HTTPStatus.BAD_REQUEST);
+      await UseCase.admin.post(UseCase.PATH_SPORTS).send({ name: '' }).expect(HTTPStatus.BAD_REQUEST);
     });
   });
 

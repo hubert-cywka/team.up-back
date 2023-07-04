@@ -43,9 +43,7 @@ export default class UseCase {
       password: this.PASSWORD,
       birthdate: '2000-01-01'
     });
-    await mongoose.connection.db
-      .collection('users')
-      .findOneAndUpdate({ email: email }, { $set: { role: role } });
+    await mongoose.connection.db.collection('users').findOneAndUpdate({ email: email }, { $set: { role: role } });
     await as.post(this.PATH_AUTH.concat('/login')).send({ email: email, password: this.PASSWORD });
   };
 
@@ -56,10 +54,7 @@ export default class UseCase {
   public static getCollectionLength = async (collection: string) => {
     return await mongoose.connection.db.collection(collection).countDocuments();
   };
-  public static findInCollection = async (
-    collection: string,
-    filter: Filter<mongoose.mongo.BSON.Document>
-  ) => {
+  public static findInCollection = async (collection: string, filter: Filter<mongoose.mongo.BSON.Document>) => {
     return await mongoose.connection.db.collection(collection).findOne(filter);
   };
 }

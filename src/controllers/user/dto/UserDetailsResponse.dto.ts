@@ -1,13 +1,13 @@
 import { UserRole } from '../../../types/users/UserRole';
 
 class UserDetailsResponse {
-  public _id: string;
+  public id: string;
   public name: string;
   public email: string;
   public role: UserRole;
 
-  constructor(_id: string, name: string, email: string, role: UserRole) {
-    this._id = _id;
+  constructor(id: string, name: string, email: string, role: UserRole) {
+    this.id = id;
     this.name = name;
     this.email = email;
     this.role = role;

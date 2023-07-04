@@ -3,7 +3,4 @@ import { SportDiscipline } from '../../../types/sports/SportDiscipline.interface
 
 const SportDisciplineScheme = new Schema({ name: { required: true, unique: true, type: String } });
 
-export const SportDisciplineModel = model<SportDiscipline>(
-  'SportDiscipline',
-  SportDisciplineScheme
-);
+export const SportDisciplineModel = model<SportDiscipline>('SportDiscipline', SportDisciplineScheme);

@@ -33,21 +33,13 @@ class SportController implements Controller {
       this.createSportDiscipline
     );
     this.router
-      .all(
-        this.path.concat('/:id'),
-        authTokenValidationMiddleware,
-        authorizationValidation([UserRole.ADMIN])
-      )
-      .put(
-        this.path.concat('/:id'),
-        dtoValidation(CreateSportDisciplineRequest),
-        this.updateSportDiscipline
-      )
+      .all(this.path.concat('/:id'), authTokenValidationMiddleware, authorizationValidation([UserRole.ADMIN]))
+      .put(this.path.concat('/:id'), dtoValidation(CreateSportDisciplineRequest), this.updateSportDiscipline)
       .delete(this.path.concat('/:id'), this.deleteSportDiscipline);
   }
 
   createSportDiscipline = async (request: Request, response: Response, next: NextFunction) => {
-    const createdSportDiscipline = await this.sportService.saveSportDiscipline(request.body);
+    const createdSportDiscipline = await this.sportService.save(request.body);
 
     if (createdSportDiscipline) {
       response.send(createdSportDiscipline);
@@ -57,7 +49,7 @@ class SportController implements Controller {
   };
 
   deleteSportDiscipline = async (request: Request, response: Response, next: NextFunction) => {
-    const deletedDiscipline = await this.sportService.deleteSportDisciplineById(request.params.id);
+    const deletedDiscipline = await this.sportService.deleteById(request.params.id);
 
     if (deletedDiscipline) {
       response.sendStatus(HTTPStatus.OK);
@@ -67,10 +59,7 @@ class SportController implements Controller {
   };
 
   updateSportDiscipline = async (request: Request, response: Response, next: NextFunction) => {
-    const updatedDiscipline = await this.sportService.updateSportDisciplineById(
-      request.params.id,
-      request.body
-    );
+    const updatedDiscipline = await this.sportService.updateById(request.params.id, request.body);
 
     if (updatedDiscipline) {
       response.send(updatedDiscipline);

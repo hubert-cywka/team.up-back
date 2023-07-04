@@ -8,27 +8,27 @@ class SportRepository {
 
   constructor() {}
 
-  public findAll = async () => {
+  public findAll = () => {
     return this.sportDisciplineModel.find();
   };
 
-  public findSportDisciplineById = async (id: string) => {
+  public findById = (id: string) => {
     return this.sportDisciplineModel.findOne({ _id: id });
   };
 
-  public findSportDisciplinesByName = async (name: string) => {
+  public findAllByName = (name: string) => {
     return this.sportDisciplineModel.find({ name: name });
   };
 
-  public saveSportDiscipline = async (disciplineToSave: SaveSportDiscipline) => {
+  public save = (disciplineToSave: SaveSportDiscipline) => {
     return this.sportDisciplineModel.create(disciplineToSave);
   };
 
-  public updateSportDisciplineById = async (id: string, disciplineToSave: SaveSportDiscipline) => {
+  public updateById = (id: string, disciplineToSave: SaveSportDiscipline) => {
     return this.sportDisciplineModel.findByIdAndUpdate(id, disciplineToSave, { new: true });
   };
 
-  public deleteSportDisciplineById = async (id: string) => {
+  public deleteById = (id: string) => {
     return this.sportDisciplineModel.findByIdAndDelete(id);
   };
 }

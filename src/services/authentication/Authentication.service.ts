@@ -51,10 +51,7 @@ class AuthenticationService {
   };
 
   public getUserFromToken = async (authorizationCookie: string) => {
-    const verificationResponse = jwt.verify(
-      authorizationCookie,
-      TokensConfig.secret
-    ) as AuthTokenData;
+    const verificationResponse = jwt.verify(authorizationCookie, TokensConfig.secret) as AuthTokenData;
     return this.userRepository.findUserById(verificationResponse._id);
   };
 }
