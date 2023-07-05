@@ -1,6 +1,7 @@
 import { model, Schema } from 'mongoose';
 import { User } from '../../../types/users/User.interface';
 import { UserRole } from '../../../types/users/UserRole';
+import { DEFAULT_IMAGE } from '../../../helpers/Constants';
 
 const UserSchema = new Schema({
   name: {
@@ -27,6 +28,10 @@ const UserSchema = new Schema({
   role: {
     type: String,
     enum: UserRole
+  },
+  image: {
+    type: String,
+    default: DEFAULT_IMAGE
   }
 });
 

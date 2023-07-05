@@ -7,6 +7,7 @@ import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse';
 import AuthenticationService from '../../services/authentication/Authentication.service';
 import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
 import UserService from '../../services/user/User.service';
+import { HTTPStatus } from '../../helpers/HTTPStatus';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -31,7 +32,7 @@ class AuthenticationController implements Controller {
     const createdUser = await this.userService.saveUser(signUpData);
 
     if (createdUser) {
-      response.send(this.userService.prepareUserDetailsFromUser(createdUser));
+      response.sendStatus(HTTPStatus.OK);
     } else {
       next(new UserAlreadyExistsResponse());
     }
@@ -45,7 +46,7 @@ class AuthenticationController implements Controller {
       const authToken = this.authenticationService.createAuthToken(authenticatedUser);
       const authCookie = this.authenticationService.createAuthCookie(authToken);
       response.setHeader('Set-Cookie', [authCookie]);
-      response.send(this.userService.prepareUserDetailsFromUser(authenticatedUser));
+      response.send(this.authenticationService.prepareSignInResponseFromUser(authenticatedUser));
     } else {
       next(new InvalidCredentialsResponse());
     }

@@ -4,6 +4,7 @@ import { UserRole } from '../../types/users/UserRole';
 import SignUpRequestBody from '../../controllers/authentication/dto/SignUpRequestBody.dto';
 import { User } from '../../types/users/User.interface';
 import UserDetailsResponse from '../../controllers/user/dto/UserDetailsResponse.dto';
+import { DEFAULT_IMAGE } from '../../helpers/Constants';
 
 class UserService {
   private userRepository: UserRepository;
@@ -14,7 +15,7 @@ class UserService {
   }
 
   public prepareUserDetailsFromUser = (user: User) => {
-    return new UserDetailsResponse(user._id, user.name, user.email, user.role);
+    return new UserDetailsResponse(user._id, user.name, user.email, user.role, user.image);
   };
 
   public prepareAllUsersDetails = async () => {
@@ -37,7 +38,8 @@ class UserService {
       ...userToSave,
       password: encryptedPassword,
       createdAt: new Date().toString(),
-      role: UserRole.USER
+      role: UserRole.USER,
+      image: DEFAULT_IMAGE
     });
   };
 

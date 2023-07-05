@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import TokensConfig from '../../config/TokensConfig';
 import SignInRequestBody from '../../controllers/authentication/dto/SignInRequestBody.dto';
 import UserRepository from '../../repositories/user/User.repository';
+import SignInResponse from '../../controllers/authentication/dto/SignInResponse';
 
 class AuthenticationService {
   private userRepository: UserRepository;
@@ -54,6 +55,10 @@ class AuthenticationService {
     const verificationResponse = jwt.verify(authorizationCookie, TokensConfig.secret) as AuthTokenData;
     return this.userRepository.findUserById(verificationResponse._id);
   };
+
+  public prepareSignInResponseFromUser = (user: User) => {
+    return new SignInResponse(user._id, user.name, user.email, user.role);
+  }
 }
 
 export default AuthenticationService;

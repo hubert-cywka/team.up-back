@@ -21,11 +21,11 @@ class UserController implements Controller {
 
   public initializeRoutes() {
     this.router
-      .all(this.path, authTokenValidation)
-      .get(this.path, authorizationValidation([UserRole.ADMIN]), this.getAllUsersDetails)
-      .get(this.path.concat('/me'), this.getSignedInUserDetails)
+      .get(this.path, authTokenValidation, authorizationValidation([UserRole.ADMIN]), this.getAllUsersDetails)
+      .get(this.path.concat('/me'), authTokenValidation, this.getSignedInUserDetails)
       .patch(
         this.path.concat('/:id'),
+        authTokenValidation,
         dtoValidation(ChangeRoleRequest),
         authorizationValidation([UserRole.ADMIN]),
         this.changeUserRole
@@ -40,8 +40,9 @@ class UserController implements Controller {
     const requestWithUser = request as RequestWithUser;
     if (!requestWithUser.user) {
       next(new UserNotFoundResponse());
+    } else {
+      response.send(this.userService.prepareUserDetailsFromUser(requestWithUser.user));
     }
-    response.send(this.userService.prepareUserDetailsFromUser(requestWithUser.user));
   };
 
   changeUserRole = async (request: Request, response: Response, next: NextFunction) => {

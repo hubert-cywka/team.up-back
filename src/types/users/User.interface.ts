@@ -7,5 +7,6 @@ export interface User {
   password: string;
   birthdate: string;
   role: UserRole;
+  image: string;
   createdAt?: string;
 }

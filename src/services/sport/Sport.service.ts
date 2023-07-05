@@ -9,13 +9,13 @@ class SportService {
   }
 
   public existsById = async (id: string) => {
-    const maybeDiscipline = this.sportRepository.findById(id);
+    const maybeDiscipline = await this.sportRepository.findById(id);
     return !!maybeDiscipline;
   };
 
   public existsByName = async (name: string) => {
-    const maybeDiscipline = this.sportRepository.findAllByName(name);
-    return !!maybeDiscipline;
+    const maybeDiscipline = await this.sportRepository.findAllByName(name);
+    return !!maybeDiscipline.length;
   };
 
   public save = async (disciplineToSave: SaveSportDiscipline) => {
