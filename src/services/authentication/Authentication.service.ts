@@ -58,7 +58,7 @@ class AuthenticationService {
 
   public prepareSignInResponseFromUser = (user: User) => {
     return new SignInResponse(user._id, user.name, user.email, user.role);
-  }
+  };
 }
 
 export default AuthenticationService;

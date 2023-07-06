@@ -7,10 +7,12 @@ function errorMiddleware(error: ErrorResponse, request: Request, response: Respo
   const status = error.status || 500;
   const message = status == 500 || !error.message ? INTERNAL_ERROR_MESSAGE : error.message;
 
-  if (status >= 500) {
-    Logger.error(error.message);
-  } else {
-    Logger.warn(error.message);
+  if (process.env.NODE_ENV !== 'test') {
+    if (status >= 500) {
+      Logger.error(error.message);
+    } else {
+      Logger.warn(error.message);
+    }
   }
 
   response.status(status).send({ status, message });

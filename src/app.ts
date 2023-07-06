@@ -16,8 +16,10 @@ class App {
   public port: number;
 
   constructor(controllers: Controller[], port: number) {
+    const { NODE_ENV } = process.env;
+
     this.app = express();
-    this.port = port;
+    this.port = NODE_ENV === 'test' ? 0 : port;
 
     this.initializeDatabaseConnection();
     this.initializeMiddlewares();

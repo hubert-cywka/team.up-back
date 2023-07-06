@@ -32,10 +32,21 @@ class SportController implements Controller {
       dtoValidation(CreateSportDisciplineRequest),
       this.createSportDiscipline
     );
+
     this.router
-      .all(this.path.concat('/:id'), authTokenValidationMiddleware, authorizationValidation([UserRole.ADMIN]))
-      .put(this.path.concat('/:id'), dtoValidation(CreateSportDisciplineRequest), this.updateSportDiscipline)
-      .delete(this.path.concat('/:id'), this.deleteSportDiscipline);
+      .put(
+        this.path.concat('/:id'),
+        authTokenValidationMiddleware,
+        authorizationValidation([UserRole.ADMIN]),
+        dtoValidation(CreateSportDisciplineRequest),
+        this.updateSportDiscipline
+      )
+      .delete(
+        this.path.concat('/:id'),
+        authTokenValidationMiddleware,
+        authorizationValidation([UserRole.ADMIN]),
+        this.deleteSportDiscipline
+      );
   }
 
   createSportDiscipline = async (request: Request, response: Response, next: NextFunction) => {

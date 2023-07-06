@@ -33,6 +33,8 @@ const app = new App(
   ApplicationConfig.port
 );
 
-app.listen();
+if (process.env.NODE_ENV !== 'test') {
+  app.listen();
+}
 
 module.exports = app.app;

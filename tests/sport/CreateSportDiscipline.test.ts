@@ -4,15 +4,15 @@ import CreateSportDisciplineRequest from '../../src/controllers/sport/dto/Create
 import { UserRole } from '../../src/types/users/UserRole';
 
 describe('Testing create sport discipline use case', () => {
-  afterAll(() => {
-    UseCase.closeDatabase();
+  afterAll(async () => {
+    return await UseCase.clearDatabase();
+  });
+
+  beforeAll(async () => {
+    await UseCase.createDefaultAccountsAndLogin();
   });
 
   describe(`POST ${UseCase.PATH_SPORTS} as admin`, () => {
-    beforeAll(async () => {
-      await UseCase.registerAndLoginAs(UseCase.admin, UseCase.ADMIN_EMAIL, UserRole.ADMIN);
-    });
-
     it(`should return ${HTTPStatus.OK} if discipline does not exist yet`, async () => {
       await UseCase.admin.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST).expect(HTTPStatus.OK);
     });
@@ -53,11 +53,6 @@ describe('Testing create sport discipline use case', () => {
   });
 
   describe(`POST ${UseCase.PATH_SPORTS} as user`, () => {
-    beforeAll(async () => {
-      await UseCase.logoutAs(UseCase.admin);
-      await UseCase.registerAndLoginAs(UseCase.user, UseCase.USER_EMAIL, UserRole.USER);
-    });
-
     it(`should always return ${HTTPStatus.FORBIDDEN}`, async () => {
       await UseCase.user
         .post(UseCase.PATH_SPORTS)
@@ -73,9 +68,9 @@ describe('Testing create sport discipline use case', () => {
     });
   });
 
-  describe(`POST ${UseCase.PATH_SPORTS} as unauthorized user`, () => {
+  describe(`POST ${UseCase.PATH_SPORTS} as unauthenticated user`, () => {
     beforeAll(async () => {
-      await UseCase.logoutAs(UseCase.user);
+      await UseCase.logoutAll();
     });
 
     it(`should always return ${HTTPStatus.UNAUTHORIZED}`, async () => {
