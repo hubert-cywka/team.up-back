@@ -1,7 +1,6 @@
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 import CreateSportDisciplineRequest from '../../src/controllers/sport/dto/CreateDisciplineRequest.dto';
-import { UserRole } from '../../src/types/users/UserRole';
 
 describe('Testing create sport discipline use case', () => {
   afterAll(async () => {

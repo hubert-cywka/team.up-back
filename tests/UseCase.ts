@@ -7,6 +7,7 @@ import CreateSportDisciplineRequest from '../src/controllers/sport/dto/CreateDis
 import ChangeRoleRequest from '../src/controllers/user/dto/ChangeRoleRequest.dto';
 import SignUpRequestBody from '../src/controllers/authentication/dto/SignUpRequestBody.dto';
 import SignInRequestBody from '../src/controllers/authentication/dto/SignInRequestBody.dto';
+import CreateEventRequest from '../src/controllers/event/dto/CreateEventRequest.dto';
 
 const app = require('../src/server');
 
@@ -17,6 +18,7 @@ export default class UseCase {
   public static PATH_USERS_ME = this.PATH_USERS.concat('/me');
 
   public static PATH_SPORTS = this.BASE_PATH.concat('/sports');
+  public static PATH_EVENTS = this.PATH_SPORTS.concat('/:id/events');
 
   public static PATH_AUTH = this.BASE_PATH.concat('/auth');
   public static PATH_LOGIN = this.PATH_AUTH.concat('/login');
@@ -33,6 +35,13 @@ export default class UseCase {
   public static SPORT_DISCIPLINE_UPDATE_REQUEST: CreateSportDisciplineRequest = {
     name: UseCase.UPDATED_SPORT_DISCIPLINE.name
   };
+
+  public static EVENT_CREATE_REQUEST: CreateEventRequest = {
+    maxPlayers: 8,
+    minPlayers: 4,
+    startDate: '2030-10-10',
+    location: '40.72734288251487,-74.05179274121093'
+  }
 
   public static CHANGE_ROLE_TO_ADMIN_REQUEST: ChangeRoleRequest = { role: UserRole.ADMIN };
   public static CHANGE_ROLE_TO_USER_REQUEST: ChangeRoleRequest = { role: UserRole.USER };

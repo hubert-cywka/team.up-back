@@ -17,7 +17,7 @@
     "migrate:status": "ts-node node_modules/migrate-mongo/bin/migrate-mongo status -f migrate-mongo-config.ts",
     "migrate:undo-last": "ts-node node_modules/migrate-mongo/bin/migrate-mongo down -f migrate-mongo-config.ts && npm run migrate:status",
     "migrate": "ts-node node_modules/migrate-mongo/bin/migrate-mongo up -f migrate-mongo-config.ts",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --runInBand"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --runInBand --coverage"
   },
   "keywords": [],
   "author": "Hubert Cywka",

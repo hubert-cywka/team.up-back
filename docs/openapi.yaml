@@ -1,0 +1,410 @@
+openapi: 3.0.3
+info:
+  title: Team.Up REST server
+  description: ""
+  version: 1.0.0
+
+servers: [{ url: '/app' }]
+
+
+tags:
+  - name: sports
+    description: All available requests related to sports
+  - name: events
+    description: All available requests related to events
+  - name: users
+    description: All available requests related to users
+  - name: auth
+    description: All available requests related to authorization and authentication
+
+paths:
+  /sports:
+    get:
+      tags:
+        - sports
+      summary: Get all sport disciplines
+      description: |
+        Get all available sport disciplines
+
+        Allowed roles: ```ALL```
+      operationId: getSportDisciplines
+      responses:
+        '200':
+          description: Sport disciplines were fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportDiscipline'
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - sports
+      summary: Add new sport discipline
+      description: |
+        Add new sport discipline
+
+        Allowed roles: ```ADMIN```
+      operationId: createSportDiscipline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSportDisciplineRequest'
+        required: true
+      responses:
+        '200':
+          description: Sport discipline added successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportDiscipline'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '409':
+          description: Sport discipline with that name already exists
+
+  /sports/{id}:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - sports
+      summary: Update sport discipline
+      description: |
+        Update existing sport discipline
+
+        Allowed roles: ```ADMIN```
+      operationId: updateSportDiscipline
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSportDisciplineRequest'
+        required: true
+      responses:
+        '200':
+          description: Sport discipline updated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportDiscipline'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - sports
+      summary: Delete sport discipline
+      description: |
+        Delete existing sport discipline
+
+        Allowed roles: ```ADMIN```
+      operationId: deleteSportDiscipline
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+      responses:
+        '200':
+          description: Sport discipline deleted successfully
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found
+
+  /users:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Get all users details
+      description: |
+        Get all users details
+
+        Allowed roles: ```ADMIN```
+      operationId: getUsersDetails
+      responses:
+        '200':
+          description: Users details were fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+
+  /users/me:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Get signed in user details
+      description: |
+        Get all users details
+
+        Allowed roles: ```ADMIN``` ```USER```
+      operationId: getSignedInUserDetails
+      responses:
+        '200':
+          description: User details were fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: User does not exist
+
+  /users/{id}:
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Change user role
+      description: |
+        Get all users details
+
+        Allowed roles: ```ADMIN```
+      operationId: changeUserRole
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRole'
+        required: true
+      responses:
+        '200':
+          description: User role changed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: User does not exist
+
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary:  Sign in
+      description: Sign in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+        required: true
+      responses:
+        '200':
+          description: User signed in successfully
+          headers:
+            Set-Cookie:
+              $ref: '#/components/headers/AuthorizationSetCookie'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: Incorrect email or password
+
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary:  Sign up
+      description: Sign up user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        '200':
+          description: User signed up successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+        '409':
+          description: User with that email already exists
+
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary:  Sign out
+      description: |
+        Sign out user
+        
+        Allowed roles: ```ADMIN```, ```USER```
+      responses:
+        '200':
+          description: User signed out successfully
+          headers:
+            Set-Cookie:
+              $ref: '#/components/headers/AuthorizationClearCookie'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetails'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  headers:
+    AuthorizationSetCookie:
+      schema:
+        description: Authorization Set-Cookie
+        type: string
+        format: application/jwt
+        example: "Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzhhN2EvMTA1sDsiLCJpYXQiOjE2ODg3MjIxNzQsImV4cCI6MTY4ODcyMzA3NH0.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"
+
+    AuthorizationClearCookie:
+      schema:
+        description: Clear Authorization Set-Cookie
+        type: string
+        format: application/jwt
+        example: "Authorization=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"
+
+  schemas:
+    SportDiscipline:
+      required:
+        - name
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        name:
+          type: string
+          example: Football
+
+    CreateSportDisciplineRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: Football
+
+    SignInRequest:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@email.com
+        password:
+          type: string
+          example: Johny82!
+
+    SignUpRequest:
+      required:
+        - email
+        - password
+        - username
+        - birthdate
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@email.com
+        password:
+          type: string
+          example: Johny82!
+        username:
+          type: string
+          example: JohnP
+        birthdate:
+          type: string
+          example: 2000-01-05
+
+    UserRole:
+      properties:
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+
+    UserDetails:
+      required:
+        - email
+        - username
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        email:
+          type: string
+          example: user@email.com
+        username:
+          type: string
+          example: JohnP
+        role:
+          type: string
+          example: ADMIN
+        image:
+          type: string
+          example: "data:image/webp;base64,UklGRt47AABXRUJQVlA4INI7AABwIwKdASpeBYgDPm02l0mkIqKhIRE4mIANiWlu/AT0G+Cf/7tn4P/"
+
+
