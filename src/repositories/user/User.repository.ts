@@ -7,8 +7,6 @@ import { UserRole } from '../../types/users/UserRole';
 class UserRepository {
   private userModel: Model<User> = UserModel;
 
-  constructor() {}
-
   public findAllUsers = async () => {
     return this.userModel.find();
   };
@@ -17,7 +15,7 @@ class UserRepository {
     return this.userModel.find({ email: email });
   };
 
-  public findUserByEmail = (email: string) => {
+  public  findUserByEmail = (email: string) => {
     return this.userModel.findOne({ email: email });
   };
 

@@ -9,7 +9,7 @@ async function authTokenValidation(request: Request, response: Response, next: N
 
   if (authorizationCookie) {
     try {
-      const maybeUser = await authenticationService.getUserFromToken(authorizationCookie);
+      const maybeUser = await authenticationService.getUserFromToken(authorizationCookie, 'Authorization');
 
       if (maybeUser) {
         requestWithUser.user = maybeUser;

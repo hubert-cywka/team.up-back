@@ -6,14 +6,19 @@ import TokensConfig from '../../config/TokensConfig';
 import SignInRequestBody from '../../controllers/authentication/dto/SignInRequestBody.dto';
 import UserRepository from '../../repositories/user/User.repository';
 import SignInResponse from '../../controllers/authentication/dto/SignInResponse';
+import TokenRepository from '../../repositories/token/Token.repository';
 
 class AuthenticationService {
   private userRepository: UserRepository;
+  private tokenRepository: TokenRepository;
   private readonly authTokenExpirationTime = TokensConfig.timeToExpire;
-  private readonly authTokenSecret = TokensConfig.secret;
+  private readonly refreshTokenExpirationTime = TokensConfig.refreshTokenTimeToExpire;
+  private readonly authTokenSecret = TokensConfig.jwtSecret;
+  private readonly refreshTokenSecret = TokensConfig.refreshTokenSecret;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: UserRepository, tokenRepository: TokenRepository) {
     this.userRepository = userRepository;
+    this.tokenRepository = tokenRepository;
   }
 
   public authenticateUser = async (userToAuthenticate: SignInRequestBody) => {
@@ -32,27 +37,51 @@ class AuthenticationService {
     }
   };
 
-  public createAuthToken = (user: User): AuthToken => {
-    const timeToExpire = 60 * this.authTokenExpirationTime;
-
+  public createAuthToken = async (user: User, type: 'Authorization' | 'RefreshToken'): Promise<AuthToken> => {
+    const timeToExpire = type === 'Authorization' ? this.authTokenExpirationTime : this.refreshTokenExpirationTime;
+    const secret = type === 'Authorization' ? this.authTokenSecret : this.refreshTokenSecret;
     const dataStoredInToken: AuthTokenData = {
       _id: user._id
     };
 
-    return {
+    const token: AuthToken = {
       timeToExpire,
-      token: jwt.sign(dataStoredInToken, this.authTokenSecret, {
+      token: jwt.sign(dataStoredInToken, secret, {
         expiresIn: timeToExpire
       })
     };
+
+    if (type === 'RefreshToken') {
+     await this.tokenRepository.save(token)
+    }
+
+    return token;
   };
 
-  public createAuthCookie = (token: AuthToken) => {
-    return `Authorization=${token.token}; HttpOnly; Path=/; Max-Age=${token.timeToExpire}`;
+  public createAuthCookie = (token: AuthToken, type: 'Authorization' | 'RefreshToken') => {
+    return `${type}=${token.token}; HttpOnly; Path=/; Max-Age=${token.timeToExpire}`;
   };
 
-  public getUserFromToken = async (authorizationCookie: string) => {
-    const verificationResponse = jwt.verify(authorizationCookie, TokensConfig.secret) as AuthTokenData;
+  public buildTokenCookies = async (user: User) => {
+    const authToken = await this.createAuthToken(user, 'Authorization');
+    const refreshToken = await this.createAuthToken(user, 'RefreshToken');
+    const authCookie = this.createAuthCookie(authToken, 'Authorization');
+    const refreshCookie = this.createAuthCookie(refreshToken, 'RefreshToken');
+    return [authCookie, refreshCookie];
+  }
+
+  public getUserFromToken = async (token: string, type: 'Authorization' | 'RefreshToken') => {
+    const secret = type === 'Authorization' ? TokensConfig.jwtSecret : TokensConfig.refreshTokenSecret;
+    const verificationResponse = jwt.verify(token, secret) as AuthTokenData;
+
+    if (type === 'RefreshToken') {
+      const canRefresh = await this.tokenRepository.exists(token);
+      if (!canRefresh) {
+        return null;
+      }
+      await this.tokenRepository.deleteByToken(token);
+    }
+
     return this.userRepository.findUserById(verificationResponse._id);
   };
 

@@ -23,6 +23,7 @@ export default class UseCase {
   public static PATH_AUTH = this.BASE_PATH.concat('/auth');
   public static PATH_LOGIN = this.PATH_AUTH.concat('/login');
   public static PATH_REGISTER = this.PATH_AUTH.concat('/register');
+  public static PATH_REFRESH = this.PATH_AUTH.concat('/refresh');
 
   public static SPORTS_COLLECTION = 'sportdisciplines';
   public static USERS_COLLECTION = 'users';
@@ -57,6 +58,9 @@ export default class UseCase {
     email: this.SIGN_UP_REQUEST.email,
     password: this.SIGN_UP_REQUEST.password
   };
+
+  public static JWT_HEADER = 'Authorization';
+  public static REFRESH_TOKEN_HEADER = 'RefreshToken';
 
   public static ADMIN_EMAIL = 'admin@email.com';
   public static USER_EMAIL = 'user@email.com';

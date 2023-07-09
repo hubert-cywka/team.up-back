@@ -8,6 +8,8 @@ import AuthenticationService from '../../services/authentication/Authentication.
 import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
 import UserService from '../../services/user/User.service';
 import { HTTPStatus } from '../../helpers/HTTPStatus';
+import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse';
+import { RequestWithUser } from '../../types/users/RequestWithUser.interface';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -25,6 +27,7 @@ class AuthenticationController implements Controller {
     this.router.post(this.path.concat('/register'), dtoValidation(SignUpRequestBody), this.signUpUser);
     this.router.post(this.path.concat('/login'), dtoValidation(SignInRequestBody), this.signInUser);
     this.router.post(this.path.concat('/logout'), this.signOutUser);
+    this.router.post(this.path.concat('/refresh'), this.refreshToken);
   }
 
   signUpUser = async (request: Request, response: Response, next: NextFunction) => {
@@ -34,7 +37,7 @@ class AuthenticationController implements Controller {
     if (createdUser) {
       response.sendStatus(HTTPStatus.OK);
     } else {
-      next(new UserAlreadyExistsResponse());
+      return next(new UserAlreadyExistsResponse());
     }
   };
 
@@ -43,18 +46,34 @@ class AuthenticationController implements Controller {
     const authenticatedUser = await this.authenticationService.authenticateUser(signInData);
 
     if (authenticatedUser) {
-      const authToken = this.authenticationService.createAuthToken(authenticatedUser);
-      const authCookie = this.authenticationService.createAuthCookie(authToken);
-      response.setHeader('Set-Cookie', [authCookie]);
+      response.setHeader('Set-Cookie', await this.authenticationService.buildTokenCookies(authenticatedUser));
       response.send(this.authenticationService.prepareSignInResponseFromUser(authenticatedUser));
     } else {
-      next(new InvalidCredentialsResponse());
+      return next(new InvalidCredentialsResponse());
     }
   };
 
   private signOutUser = (request: Request, response: Response) => {
-    response.setHeader('Set-Cookie', ['Authorization=; Max-age=0; Path=/; HttpOnly']);
+    response.setHeader('Set-Cookie', ['Authorization=; Max-age=0; Path=/; HttpOnly', 'RefreshToken=; Max-age=0; Path=/; HttpOnly']);
     response.sendStatus(200);
+  };
+
+  refreshToken = async (request: Request, response: Response, next: NextFunction) => {
+    const requestWithUser = request as RequestWithUser;
+    const refreshToken: string = requestWithUser.cookies.RefreshToken;
+
+    if (!refreshToken) {
+      return next(new InvalidAuthTokenResponse());
+    }
+
+    const user = await this.authenticationService.getUserFromToken(refreshToken, 'RefreshToken');
+
+    if (user) {
+      response.setHeader('Set-Cookie', await this.authenticationService.buildTokenCookies(user));
+      response.sendStatus(HTTPStatus.OK);
+    } else {
+      next(new InvalidAuthTokenResponse());
+    }
   };
 }
 

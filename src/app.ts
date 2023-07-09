@@ -10,6 +10,7 @@ import Logger from './helpers/Logger';
 import DatabaseConfig from './config/DatabaseConfig';
 import cors from 'cors';
 import ResourceNotFoundResponse from './helpers/ResourceNotFoundResponse';
+import ApplicationConfig from './config/ApplicationConfig';
 
 class App {
   public app: express.Application;
@@ -59,10 +60,11 @@ class App {
 
   private getCorsSettings() {
     return {
-      origin: '*',
+      origin: ApplicationConfig.frontendUrl,
+      credentials: true,
       optionsSuccessStatus: 200,
       methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET', 'PATCH'],
-      allowedHeaders: '*'
+      allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
     };
   }
 

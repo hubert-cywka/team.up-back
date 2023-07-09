@@ -11,15 +11,17 @@ import SportRepository from './repositories/sport/Sport.repository';
 import EventRepository from './repositories/event/Event.repository';
 import EventService from './services/event/Event.service';
 import EventController from './controllers/event/Event.controller';
+import TokenRepository from './repositories/token/Token.repository';
 
 require('express-async-errors');
 
 const userRepository = new UserRepository();
 const sportRepository = new SportRepository();
 const eventRepository = new EventRepository();
+const tokenRepository = new TokenRepository();
 
 const userService = new UserService(userRepository);
-export const authenticationService = new AuthenticationService(userRepository);
+export const authenticationService = new AuthenticationService(userRepository, tokenRepository);
 const sportService = new SportService(sportRepository);
 const eventService = new EventService(eventRepository);
 

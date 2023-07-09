@@ -30,7 +30,7 @@ paths:
       operationId: getSportDisciplines
       responses:
         '200':
-          description: Sport disciplines were fetched successfully
+          description: Sport disciplines were fetched successfuly
           content:
             application/json:
               schema:
@@ -57,7 +57,7 @@ paths:
         required: true
       responses:
         '200':
-          description: Sport discipline added successfully
+          description: Sport discipline added successfuly
           content:
             application/json:
               schema:
@@ -98,7 +98,7 @@ paths:
         required: true
       responses:
         '200':
-          description: Sport discipline updated successfully
+          description: Sport discipline updated successfuly
           content:
             application/json:
               schema:
@@ -132,7 +132,7 @@ paths:
           description: ID of the sport discipline
       responses:
         '200':
-          description: Sport discipline deleted successfully
+          description: Sport discipline deleted successfuly
         '401':
           description: User couldn't be authenticated
         '403':
@@ -154,7 +154,7 @@ paths:
       operationId: getUsersDetails
       responses:
         '200':
-          description: Users details were fetched successfully
+          description: Users details were fetched successfuly
           content:
             application/json:
               schema:
@@ -180,7 +180,7 @@ paths:
       operationId: getSignedInUserDetails
       responses:
         '200':
-          description: User details were fetched successfully
+          description: User details were fetched successfuly
           content:
             application/json:
               schema:
@@ -219,7 +219,7 @@ paths:
         required: true
       responses:
         '200':
-          description: User role changed successfully
+          description: User role changed successfuly
           content:
             application/json:
               schema:
@@ -246,7 +246,7 @@ paths:
         required: true
       responses:
         '200':
-          description: User signed in successfully
+          description: User signed in successfuly
           headers:
             Set-Cookie:
               $ref: '#/components/headers/AuthorizationSetCookie'
@@ -271,7 +271,7 @@ paths:
         required: true
       responses:
         '200':
-          description: User signed up successfully
+          description: User signed up successfuly
           content:
             application/json:
               schema:
@@ -290,7 +290,7 @@ paths:
         Allowed roles: ```ADMIN```, ```USER```
       responses:
         '200':
-          description: User signed out successfully
+          description: User signed out successfuly
           headers:
             Set-Cookie:
               $ref: '#/components/headers/AuthorizationClearCookie'
@@ -298,6 +298,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDetails'
+
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary:  Refresh token
+      description: Refreshes JWT and Refresh Token. Old Refresh Token is invalidated and can't be used any more.
+      responses:
+        '200':
+          description: Token refreshed successfully
+          headers:
+            Set-Cookie:
+              $ref: '#/components/headers/AuthorizationSetCookie'
+        '401':
+          description: Refresh Token is invalid
 
 components:
   securitySchemes:
@@ -312,14 +327,14 @@ components:
         description: Authorization Set-Cookie
         type: string
         format: application/jwt
-        example: "Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzhhN2EvMTA1sDsiLCJpYXQiOjE2ODg3MjIxNzQsImV4cCI6MTY4ODcyMzA3NH0.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"
+        example: ["Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzhhN2EvMTA1sDsiLCJpYXQiOjE2ODg3MjIxNzQsImV4cCI6MTY4ODcyMzA3NH0.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;","RefreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzmzNcEvMTA1sDsiL2pAYXQiOjE2ODg3MmcLNzQsImV4cCI42KY4ODggMoB3N9m.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"]
 
     AuthorizationClearCookie:
       schema:
         description: Clear Authorization Set-Cookie
         type: string
         format: application/jwt
-        example: "Authorization=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"
+        example: ["Authorization=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;", "RefreshToken=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"]
 
   schemas:
     SportDiscipline:
@@ -406,5 +421,3 @@ components:
         image:
           type: string
           example: "data:image/webp;base64,UklGRt47AABXRUJQVlA4INI7AABwIwKdASpeBYgDPm02l0mkIqKhIRE4mIANiWlu/AT0G+Cf/7tn4P/"
-
-

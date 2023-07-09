@@ -6,8 +6,6 @@ import { SaveSportDiscipline } from '../../services/sport/dto/SaveSportDisciplin
 class SportRepository {
   private sportDisciplineModel: Model<SportDiscipline> = SportDisciplineModel;
 
-  constructor() {}
-
   public findAll = () => {
     return this.sportDisciplineModel.find();
   };

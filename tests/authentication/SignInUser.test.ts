@@ -25,9 +25,11 @@ describe('Testing sign up use case', () => {
       expect(response.body.password).toBeFalsy();
     });
 
-    it(`should set authorization cookie if user credentials are valid`, async () => {
+    it(`should set authorization cookie and refresh token cookie if user credentials are valid`, async () => {
       const response = await UseCase.unauthenticated.post(UseCase.PATH_LOGIN).send(UseCase.SIGN_IN_REQUEST);
-      expect(response.headers['set-cookie'].length).toBeGreaterThan(0);
+      const setCookieHeaders = response.headers['set-cookie'].join('');
+      expect(setCookieHeaders).toContain(UseCase.JWT_HEADER);
+      expect(setCookieHeaders).toContain(UseCase.REFRESH_TOKEN_HEADER);
     });
 
     it(`should return ${HTTPStatus.UNAUTHORIZED} if email is not correct`, async () => {
