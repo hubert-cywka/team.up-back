@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { User } from '../../../types/users/User.interface';
-import { UserRole } from '../../../types/users/UserRole';
 import { DEFAULT_IMAGE } from '../../../helpers/Constants';
+import { User } from '../../../types/User';
+import { UserRole } from '../../../types/UserRole';
 
 const UserSchema = new Schema({
   name: {

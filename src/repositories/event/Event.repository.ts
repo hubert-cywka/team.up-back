@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
 import { EventModel } from './model/Event.model';
-import Event from '../../types/events/Event.interface';
+import { SportEvent } from '../../types/Event';
 import { SaveEvent } from '../../services/event/dto/SaveEvent';
 
 class EventRepository {
-  private eventModel: Model<Event> = EventModel;
+  private eventModel: Model<SportEvent> = EventModel;
 
   public findAllByDisciplineId = (id: string) => {
     return this.eventModel.find({ disciplineId: id });
@@ -18,7 +18,7 @@ class EventRepository {
     return this.eventModel.create(eventToSave);
   };
 
-  public updateById = (id: string, event: Event) => {
+  public updateById = (id: string, event: SportEvent) => {
     return this.eventModel.findByIdAndUpdate(id, event, { new: true });
   };
 

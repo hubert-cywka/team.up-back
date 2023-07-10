@@ -1,4 +1,4 @@
-import { UserRole } from './UserRole';
+import { Request } from 'express';
 
 export interface User {
   _id: string;
@@ -9,4 +9,8 @@ export interface User {
   role: UserRole;
   image: string;
   createdAt?: string;
+}
+
+export interface RequestWithUser extends Request {
+  user: User;
 }

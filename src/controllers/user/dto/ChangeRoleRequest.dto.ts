@@ -1,5 +1,5 @@
-import { UserRole } from '../../../types/users/UserRole';
 import { IsEnum, IsNotEmpty } from 'class-validator';
+import { UserRole } from '../../../types/UserRole';
 
 class ChangeRoleRequest {
   @IsEnum(UserRole)

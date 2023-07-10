@@ -4,7 +4,7 @@ import UseCase from '../UseCase';
 describe('Testing refresh token use case', () => {
   beforeAll(async () => {
     return await UseCase.createDefaultAccountsAndLogin();
-  })
+  });
 
   afterAll(async () => {
     return await UseCase.clearDatabase();

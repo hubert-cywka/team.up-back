@@ -1,15 +1,15 @@
-import Controller from '../../types/controllers/Controller.interface';
 import { NextFunction, Request, Response, Router } from 'express';
 import EventService from '../../services/event/Event.service';
 import SportService from '../../services/sport/Sport.service';
 import SportDisciplineNotFoundResponse from '../sport/dto/SportDisciplineNotFoundResponse';
-import { RequestWithUser } from '../../types/users/RequestWithUser.interface';
 import EventNotFoundResponse from './dto/EventNotFoundResponse';
 import NotAuthorizedToModifyEventResponse from './dto/NotAuthorizedToModifyEventResponse';
 import authTokenValidation from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateEventRequest from './dto/CreateEventRequest.dto';
 import UpdateEventRequest from './dto/UpdateEventRequest';
+import { Controller } from '../../types/Controller';
+import { RequestWithUser } from '../../types/User';
 
 class EventController implements Controller {
   public path = '/sports';

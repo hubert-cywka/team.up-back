@@ -1,4 +1,4 @@
-import { UserRole } from 'types/users/UserRole';
+import { UserRole } from '../../../types/UserRole';
 
 class SignInResponse {
   public _id: string;

@@ -1,9 +1,9 @@
 import EventRepository from '../../repositories/event/Event.repository';
 import { SaveEvent } from './dto/SaveEvent';
 import CreateEventRequest from '../../controllers/event/dto/CreateEventRequest.dto';
-import { User } from '../../types/users/User.interface';
-import Event from '../../types/events/Event.interface';
-import { UserRole } from '../../types/users/UserRole';
+import { User } from '../../types/User';
+import { SportEvent } from '../../types/Event';
+import { UserRole } from '../../types/UserRole';
 
 class EventService {
   private eventRepository: EventRepository;
@@ -29,7 +29,7 @@ class EventService {
     return this.eventRepository.save(updatedEventToSave);
   };
 
-  public updateEvent = async (id: string, eventToUpdate: Event) => {
+  public updateEvent = async (id: string, eventToUpdate: SportEvent) => {
     return this.eventRepository.updateById(id, eventToUpdate);
   };
 

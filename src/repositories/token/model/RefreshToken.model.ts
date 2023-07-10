@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { AuthToken } from '../../../types/token/AuthToken.interface';
+import { AuthToken } from '../../../types/Token';
 
 const RefreshTokenSchema = new Schema({
   token: {

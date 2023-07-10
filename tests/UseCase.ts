@@ -1,13 +1,13 @@
-import { SportDiscipline } from '../src/types/sports/SportDiscipline.interface';
 import mongoose from 'mongoose';
 import request, { SuperAgentTest } from 'supertest';
-import { UserRole } from '../src/types/users/UserRole';
 import { Filter } from 'mongodb';
 import CreateSportDisciplineRequest from '../src/controllers/sport/dto/CreateDisciplineRequest.dto';
 import ChangeRoleRequest from '../src/controllers/user/dto/ChangeRoleRequest.dto';
 import SignUpRequestBody from '../src/controllers/authentication/dto/SignUpRequestBody.dto';
 import SignInRequestBody from '../src/controllers/authentication/dto/SignInRequestBody.dto';
 import CreateEventRequest from '../src/controllers/event/dto/CreateEventRequest.dto';
+import { UserRole } from '../src/types/UserRole';
+import { SportDiscipline } from '../src/types/Sport';
 
 const app = require('../src/server');
 
@@ -42,7 +42,7 @@ export default class UseCase {
     minPlayers: 4,
     startDate: '2030-10-10',
     location: '40.72734288251487,-74.05179274121093'
-  }
+  };
 
   public static CHANGE_ROLE_TO_ADMIN_REQUEST: ChangeRoleRequest = { role: UserRole.ADMIN };
   public static CHANGE_ROLE_TO_USER_REQUEST: ChangeRoleRequest = { role: UserRole.USER };

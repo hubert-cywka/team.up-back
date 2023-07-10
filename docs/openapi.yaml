@@ -1,11 +1,10 @@
 openapi: 3.0.3
 info:
   title: Team.Up REST server
-  description: ""
+  description: ''
   version: 1.0.0
 
 servers: [{ url: '/app' }]
-
 
 tags:
   - name: sports
@@ -231,12 +230,11 @@ paths:
         '404':
           description: User does not exist
 
-
   /auth/login:
     post:
       tags:
         - auth
-      summary:  Sign in
+      summary: Sign in
       description: Sign in user
       requestBody:
         content:
@@ -261,7 +259,7 @@ paths:
     post:
       tags:
         - auth
-      summary:  Sign up
+      summary: Sign up
       description: Sign up user
       requestBody:
         content:
@@ -283,10 +281,10 @@ paths:
     post:
       tags:
         - auth
-      summary:  Sign out
+      summary: Sign out
       description: |
         Sign out user
-        
+
         Allowed roles: ```ADMIN```, ```USER```
       responses:
         '200':
@@ -303,7 +301,7 @@ paths:
     post:
       tags:
         - auth
-      summary:  Refresh token
+      summary: Refresh token
       description: Refreshes JWT and Refresh Token. Old Refresh Token is invalidated and can't be used any more.
       responses:
         '200':
@@ -327,14 +325,22 @@ components:
         description: Authorization Set-Cookie
         type: string
         format: application/jwt
-        example: ["Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzhhN2EvMTA1sDsiLCJpYXQiOjE2ODg3MjIxNzQsImV4cCI6MTY4ODcyMzA3NH0.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;","RefreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzmzNcEvMTA1sDsiL2pAYXQiOjE2ODg3MmcLNzQsImV4cCI42KY4ODggMoB3N9m.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"]
+        example:
+          [
+            'Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzhhN2EvMTA1sDsiLCJpYXQiOjE2ODg3MjIxNzQsImV4cCI6MTY4ODcyMzA3NH0.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;',
+            'RefreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg2MWU2NzU4NGUpNzmzNcEvMTA1sDsiL2pAYXQiOjE2ODg3MmcLNzQsImV4cCI42KY4ODggMoB3N9m.5DizQ_DpWm0GTky4V6L8853gIhJYrrl6c1QQBfuEuhs; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;'
+          ]
 
     AuthorizationClearCookie:
       schema:
         description: Clear Authorization Set-Cookie
         type: string
         format: application/jwt
-        example: ["Authorization=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;", "RefreshToken=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;"]
+        example:
+          [
+            'Authorization=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;',
+            'RefreshToken=; Path=/; HttpOnly; Expires=Fri, 07 Jul 2023 09:44:34 GMT;'
+          ]
 
   schemas:
     SportDiscipline:
@@ -420,4 +426,4 @@ components:
           example: ADMIN
         image:
           type: string
-          example: "data:image/webp;base64,UklGRt47AABXRUJQVlA4INI7AABwIwKdASpeBYgDPm02l0mkIqKhIRE4mIANiWlu/AT0G+Cf/7tn4P/"
+          example: 'data:image/webp;base64,UklGRt47AABXRUJQVlA4INI7AABwIwKdASpeBYgDPm02l0mkIqKhIRE4mIANiWlu/AT0G+Cf/7tn4P/'

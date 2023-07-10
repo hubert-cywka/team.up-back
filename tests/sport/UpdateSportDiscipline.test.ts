@@ -1,7 +1,5 @@
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 import UseCase from '../UseCase';
-import { UserRole } from '../../src/types/users/UserRole';
-import { afterEach } from 'jest-circus';
 
 describe('Testing update sport discipline use case', () => {
   afterAll(async () => {

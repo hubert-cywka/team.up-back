@@ -1,6 +1,6 @@
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 import UseCase from '../UseCase';
-import { UserRole } from '../../src/types/users/UserRole';
+import { UserRole } from '../../src/types/UserRole';
 
 describe('Testing sign up use case', () => {
   afterEach(async () => {

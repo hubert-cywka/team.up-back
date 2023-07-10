@@ -1,6 +1,5 @@
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 import UseCase from '../UseCase';
-import { UserRole } from '../../src/types/users/UserRole';
 
 describe('Testing delete sport discipline use case', () => {
   afterAll(async () => {

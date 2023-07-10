@@ -1,4 +1,4 @@
-interface Event {
+export interface SportEvent {
   _id: string;
   minPlayers: number;
   maxPlayers: number;
@@ -8,5 +8,3 @@ interface Event {
   createdBy: string;
   createdAt?: string;
 }
-
-export default Event;

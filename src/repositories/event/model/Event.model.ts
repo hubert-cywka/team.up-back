@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import Event from '../../../types/events/Event.interface';
+import { SportEvent } from '../../../types/Event';
 
 const EventScheme = new Schema({
   minPlayers: { required: true, type: Number },
@@ -14,4 +14,4 @@ const EventScheme = new Schema({
   }
 });
 
-export const EventModel = model<Event>('Event', EventScheme);
+export const EventModel = model<SportEvent>('Event', EventScheme);

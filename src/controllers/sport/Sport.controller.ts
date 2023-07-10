@@ -1,15 +1,15 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import Controller from '../../types/controllers/Controller.interface';
+import { Controller } from '../../types/Controller';
+import SportService from '../../services/sport/Sport.service';
+import SportRepository from '../../repositories/sport/Sport.repository';
 import authTokenValidationMiddleware from '../../middleware/authentication/AuthTokenValidation.middleware';
+import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
-import CreateSportDisciplineRequest from './dto/CreateDisciplineRequest.dto';
+import SportDisciplineAlreadyExistsResponse from './dto/SportDisciplineAlreadyExistsResponse';
 import { HTTPStatus } from '../../helpers/HTTPStatus';
 import SportDisciplineNotFoundResponse from './dto/SportDisciplineNotFoundResponse';
-import SportService from '../../services/sport/Sport.service';
-import SportDisciplineAlreadyExistsResponse from './dto/SportDisciplineAlreadyExistsResponse';
-import SportRepository from '../../repositories/sport/Sport.repository';
-import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
-import { UserRole } from '../../types/users/UserRole';
+import CreateSportDisciplineRequest from './dto/CreateDisciplineRequest.dto';
+import { UserRole } from '../../types/UserRole';
 
 class SportController implements Controller {
   public path = '/sports';

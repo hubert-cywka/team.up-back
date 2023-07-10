@@ -1,6 +1,5 @@
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 import UseCase from '../UseCase';
-import { UserRole } from '../../src/types/users/UserRole';
 
 describe('Testing change user role use case', () => {
   afterAll(async () => {
@@ -29,7 +28,7 @@ describe('Testing change user role use case', () => {
         .send(UseCase.CHANGE_ROLE_TO_ADMIN_REQUEST);
 
       const userAfterPatch = await UseCase.findInCollection(UseCase.USERS_COLLECTION, { email: UseCase.USER_EMAIL });
-      expect(userAfterPatch?.role).toBe(UserRole.ADMIN);
+      expect(userAfterPatch?.role).toBe('ADMIN');
 
       await UseCase.admin
         .patch(UseCase.PATH_USERS.concat(`/${userToPatch?._id}`))
@@ -38,7 +37,7 @@ describe('Testing change user role use case', () => {
       const userAfterSecondPatch = await UseCase.findInCollection(UseCase.USERS_COLLECTION, {
         email: UseCase.USER_EMAIL
       });
-      expect(userAfterSecondPatch?.role).toBe(UserRole.USER);
+      expect(userAfterSecondPatch?.role).toBe('USER');
     });
 
     it(`should return ${HTTPStatus.BAD_REQUEST} status if request is not valid`, async () => {

@@ -1,5 +1,5 @@
 import { Db } from 'mongodb';
-import { UserRole } from '../src/types/users/UserRole';
+import { UserRole } from '../src/types/User';
 
 module.exports = {
   async up(db: Db) {

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-import Controller from 'types/controllers/Controller.interface';
+import { Controller } from 'types/Controller';
 import mongoose from 'mongoose';
 import errorMiddleware from './middleware/error-handling/Error.middleware';
 import cookieParser from 'cookie-parser';

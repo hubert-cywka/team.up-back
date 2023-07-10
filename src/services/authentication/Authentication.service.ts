@@ -1,5 +1,3 @@
-import { User } from '../../types/users/User.interface';
-import { AuthToken, AuthTokenData } from '../../types/token/AuthToken.interface';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import TokensConfig from '../../config/TokensConfig';
@@ -7,6 +5,9 @@ import SignInRequestBody from '../../controllers/authentication/dto/SignInReques
 import UserRepository from '../../repositories/user/User.repository';
 import SignInResponse from '../../controllers/authentication/dto/SignInResponse';
 import TokenRepository from '../../repositories/token/Token.repository';
+import UseCase from '../../../tests/UseCase';
+import { User } from '../../types/User';
+import { AuthToken, AuthTokenData } from '../../types/Token';
 
 class AuthenticationService {
   private userRepository: UserRepository;
@@ -52,14 +53,15 @@ class AuthenticationService {
     };
 
     if (type === 'RefreshToken') {
-     await this.tokenRepository.save(token)
+      await this.tokenRepository.save(token);
     }
 
     return token;
   };
 
   public createAuthCookie = (token: AuthToken, type: 'Authorization' | 'RefreshToken') => {
-    return `${type}=${token.token}; HttpOnly; Path=/; Max-Age=${token.timeToExpire}`;
+    const path = type === 'RefreshToken' ? UseCase.PATH_REFRESH : '/';
+    return `${type}=${token.token}; HttpOnly; Path=${path}; Max-Age=${token.timeToExpire}`;
   };
 
   public buildTokenCookies = async (user: User) => {
@@ -68,7 +70,7 @@ class AuthenticationService {
     const authCookie = this.createAuthCookie(authToken, 'Authorization');
     const refreshCookie = this.createAuthCookie(refreshToken, 'RefreshToken');
     return [authCookie, refreshCookie];
-  }
+  };
 
   public getUserFromToken = async (token: string, type: 'Authorization' | 'RefreshToken') => {
     const secret = type === 'Authorization' ? TokensConfig.jwtSecret : TokensConfig.refreshTokenSecret;

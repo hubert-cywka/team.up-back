@@ -1,7 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { UserRole } from '../../types/users/UserRole';
-import { RequestWithUser } from '../../types/users/RequestWithUser.interface';
 import UserUnauthorizedResponse from '../../controllers/authentication/dto/UserUnauthorizedResponse';
+import { RequestWithUser } from '../../types/User';
+import { UserRole } from '../../types/UserRole';
 
 function authorizationValidation<T>(allowedRoles: UserRole[]): RequestHandler {
   return (request: Request, response: Response, next: NextFunction) => {

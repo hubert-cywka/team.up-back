@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import Controller from '../../types/controllers/Controller.interface';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import SignUpRequestBody from './dto/SignUpRequestBody.dto';
 import SignInRequestBody from './dto/SignInRequestBody.dto';
@@ -9,7 +8,8 @@ import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
 import UserService from '../../services/user/User.service';
 import { HTTPStatus } from '../../helpers/HTTPStatus';
 import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse';
-import { RequestWithUser } from '../../types/users/RequestWithUser.interface';
+import { Controller } from '../../types/Controller';
+import { RequestWithUser } from '../../types/User';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -54,7 +54,10 @@ class AuthenticationController implements Controller {
   };
 
   private signOutUser = (request: Request, response: Response) => {
-    response.setHeader('Set-Cookie', ['Authorization=; Max-age=0; Path=/; HttpOnly', 'RefreshToken=; Max-age=0; Path=/; HttpOnly']);
+    response.setHeader('Set-Cookie', [
+      'Authorization=; Max-age=0; Path=/; HttpOnly',
+      'RefreshToken=; Max-age=0; Path=/; HttpOnly'
+    ]);
     response.sendStatus(200);
   };
 
