@@ -2,12 +2,13 @@ import { NextFunction, Request, Response, Router } from 'express';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import SignUpRequestBody from './dto/SignUpRequestBody.dto';
 import SignInRequestBody from './dto/SignInRequestBody.dto';
-import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse';
+import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse.dto';
 import AuthenticationService from '../../services/authentication/Authentication.service';
-import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse';
+import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse.dto';
 import UserService from '../../services/user/User.service';
 import { HTTPStatus } from '../../helpers/HTTPStatus';
-import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse';
+import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse.dto';
+import InvalidRefreshTokenResponse from './dto/InvalidRefreshTokenResponse.dto';
 import { Controller } from '../../types/Controller';
 import { RequestWithUser } from '../../types/User';
 
@@ -75,7 +76,7 @@ class AuthenticationController implements Controller {
       response.setHeader('Set-Cookie', await this.authenticationService.buildTokenCookies(user));
       response.sendStatus(HTTPStatus.OK);
     } else {
-      next(new InvalidAuthTokenResponse());
+      next(new InvalidRefreshTokenResponse());
     }
   };
 }

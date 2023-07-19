@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import InvalidAuthTokenResponse from '../../controllers/authentication/dto/InvalidAuthTokenResponse';
+import InvalidAuthTokenResponseDto from '../../controllers/authentication/dto/InvalidAuthTokenResponse.dto';
 import { authenticationService } from '../../server';
 import { RequestWithUser } from '../../types/User';
 
@@ -15,13 +15,13 @@ async function authTokenValidation(request: Request, response: Response, next: N
         requestWithUser.user = maybeUser;
         next();
       } else {
-        next(new InvalidAuthTokenResponse());
+        next(new InvalidAuthTokenResponseDto());
       }
     } catch (e) {
-      next(new InvalidAuthTokenResponse());
+      next(new InvalidAuthTokenResponseDto());
     }
   } else {
-    next(new InvalidAuthTokenResponse());
+    next(new InvalidAuthTokenResponseDto());
   }
 }
 

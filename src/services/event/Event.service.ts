@@ -25,7 +25,7 @@ class EventService {
     userId: string,
     disciplineId: string
   ) => {
-    const updatedEventToSave: SaveEvent = { ...eventToSave, disciplineId: disciplineId, createdBy: userId };
+    const updatedEventToSave: SaveEvent = { ...eventToSave, disciplineId: disciplineId, createdBy: userId.toString() };
     return this.eventRepository.save(updatedEventToSave);
   };
 
@@ -39,7 +39,7 @@ class EventService {
 
   public isUserAuthorizedToModifyEvent = async (user: User, eventId: string) => {
     const eventToModify = await this.findById(eventId);
-    return eventToModify?.createdBy === user._id || user.role === UserRole.ADMIN;
+    return eventToModify?.createdBy.toString() === user._id.toString() || user.role === UserRole.ADMIN;
   };
 }
 

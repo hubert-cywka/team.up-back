@@ -1,10 +1,10 @@
 import ErrorResponse from '../../../helpers/ErrorResponse';
 import { HTTPStatus } from '../../../helpers/HTTPStatus';
 
-class InvalidAuthTokenResponse extends ErrorResponse {
+class InvalidAuthTokenResponseDto extends ErrorResponse {
   constructor() {
     super(HTTPStatus.UNAUTHORIZED, 'Authorization token is invalid');
   }
 }
 
-export default InvalidAuthTokenResponse;
+export default InvalidAuthTokenResponseDto;

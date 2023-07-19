@@ -11,6 +11,7 @@ import DatabaseConfig from './config/DatabaseConfig';
 import cors from 'cors';
 import ResourceNotFoundResponse from './helpers/ResourceNotFoundResponse';
 import ApplicationConfig from './config/ApplicationConfig';
+import 'reflect-metadata';
 
 class App {
   public app: express.Application;
@@ -60,7 +61,7 @@ class App {
 
   private getCorsSettings() {
     return {
-      origin: ApplicationConfig.frontendUrl,
+      origin: ApplicationConfig.frontendUrl.split(','),
       credentials: true,
       optionsSuccessStatus: 200,
       methods: ['POST', 'PUT', 'OPTIONS', 'DELETE', 'GET', 'PATCH'],

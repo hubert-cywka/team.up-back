@@ -7,7 +7,6 @@ import NotAuthorizedToModifyEventResponse from './dto/NotAuthorizedToModifyEvent
 import authTokenValidation from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateEventRequest from './dto/CreateEventRequest.dto';
-import UpdateEventRequest from './dto/UpdateEventRequest';
 import { Controller } from '../../types/Controller';
 import { RequestWithUser } from '../../types/User';
 
@@ -25,23 +24,36 @@ class EventController implements Controller {
 
   private initializeRoutes() {
     this.router
-      .all(this.path.concat('/:id/events'), this.validateDisciplineExistence)
-      .get(this.path.concat('/:id/events'), this.getEventsFromDiscipline)
-      .post(this.path.concat('/:id/events'), authTokenValidation, dtoValidation(CreateEventRequest), this.createEvent)
+      .get(this.path.concat('/:id/events'), this.validateDisciplineExistence, this.getEventsFromDiscipline)
+      .post(
+        this.path.concat('/:id/events'),
+        authTokenValidation,
+        dtoValidation(CreateEventRequest),
+        this.validateDisciplineExistence,
+        this.createEvent
+      )
       .put(
         this.path.concat('/:id/events/:eventId'),
         authTokenValidation,
-        dtoValidation(UpdateEventRequest),
+        dtoValidation(CreateEventRequest),
+        this.validateDisciplineExistence,
         this.updateEvent
       )
-      .delete(this.path.concat('/:id/events/:eventId'), authTokenValidation, this.deleteEvent);
+      .delete(
+        this.path.concat('/:id/events/:eventId'),
+        authTokenValidation,
+        this.validateDisciplineExistence,
+        this.deleteEvent
+      );
   }
 
   private validateDisciplineExistence = async (request: Request, response: Response, next: NextFunction) => {
     const disciplineId = request.params.id;
     if (!(await this.sportService.existsById(disciplineId))) {
       next(new SportDisciplineNotFoundResponse());
-    } else next();
+    } else {
+      next();
+    }
   };
 
   private getEventsFromDiscipline = async (request: Request, response: Response, next: NextFunction) => {
@@ -64,12 +76,13 @@ class EventController implements Controller {
     const user = requestWithUser.user;
 
     const eventToEdit = await this.eventService.findById(eventId);
+
     if (!eventToEdit) {
-      next(new EventNotFoundResponse());
+      return next(new EventNotFoundResponse());
     }
 
     if (!(await this.eventService.isUserAuthorizedToModifyEvent(user, eventId))) {
-      next(new NotAuthorizedToModifyEventResponse());
+      return next(new NotAuthorizedToModifyEventResponse());
     }
 
     response.send(await this.eventService.updateEvent(eventId, request.body));
@@ -79,14 +92,15 @@ class EventController implements Controller {
     const requestWithUser = request as RequestWithUser;
     const eventId = requestWithUser.params.eventId;
     const user = requestWithUser.user;
+
     const eventToDelete = await this.eventService.findById(eventId);
 
     if (!eventToDelete) {
-      next(new EventNotFoundResponse());
+      return next(new EventNotFoundResponse());
     }
 
     if (!(await this.eventService.isUserAuthorizedToModifyEvent(user, eventId))) {
-      next(new NotAuthorizedToModifyEventResponse());
+      return next(new NotAuthorizedToModifyEventResponse());
     }
 
     response.send(await this.eventService.deleteEvent(eventId));

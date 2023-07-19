@@ -27,6 +27,7 @@ export default class UseCase {
 
   public static SPORTS_COLLECTION = 'sportdisciplines';
   public static USERS_COLLECTION = 'users';
+  public static EVENTS_COLLECTION = 'sportevents';
 
   public static SPORT_DISCIPLINE: SportDiscipline = { _id: 'a12c', name: 'Volleyball' };
   public static UPDATED_SPORT_DISCIPLINE: SportDiscipline = { _id: 'c21a', name: 'Basketball' };
@@ -41,7 +42,8 @@ export default class UseCase {
     maxPlayers: 8,
     minPlayers: 4,
     startDate: '2030-10-10',
-    location: '40.72734288251487,-74.05179274121093'
+    location: { lat: 50, lng: 10 },
+    description: '2 x 30 minutes, no extra time.'
   };
 
   public static CHANGE_ROLE_TO_ADMIN_REQUEST: ChangeRoleRequest = { role: UserRole.ADMIN };

@@ -37,7 +37,6 @@ class UserService {
     return await this.userRepository.saveUser({
       ...userToSave,
       password: encryptedPassword,
-      createdAt: new Date().toString(),
       role: UserRole.USER,
       image: DEFAULT_IMAGE
     });

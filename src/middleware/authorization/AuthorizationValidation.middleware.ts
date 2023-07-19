@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import UserUnauthorizedResponse from '../../controllers/authentication/dto/UserUnauthorizedResponse';
+import UserUnauthorizedResponse from '../../controllers/authentication/dto/UserUnauthorizedResponse.dto';
 import { RequestWithUser } from '../../types/User';
 import { UserRole } from '../../types/UserRole';
 

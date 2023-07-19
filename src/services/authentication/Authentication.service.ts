@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import TokensConfig from '../../config/TokensConfig';
 import SignInRequestBody from '../../controllers/authentication/dto/SignInRequestBody.dto';
 import UserRepository from '../../repositories/user/User.repository';
-import SignInResponse from '../../controllers/authentication/dto/SignInResponse';
+import SignInResponse from '../../controllers/authentication/dto/SignInResponse.dto';
 import TokenRepository from '../../repositories/token/Token.repository';
 import UseCase from '../../../tests/UseCase';
 import { User } from '../../types/User';

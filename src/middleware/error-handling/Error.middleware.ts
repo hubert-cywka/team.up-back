@@ -10,8 +10,10 @@ function errorMiddleware(error: ErrorResponse, request: Request, response: Respo
   if (process.env.NODE_ENV !== 'test') {
     if (status >= 500) {
       Logger.error(error.message);
+      Logger.error(error.stack);
     } else {
       Logger.warn(error.message);
+      Logger.warn(error.stack);
     }
   }
 

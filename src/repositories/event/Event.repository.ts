@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
-import { EventModel } from './model/Event.model';
-import { SportEvent } from '../../types/Event';
-import { SaveEvent } from '../../services/event/dto/SaveEvent';
+import { SportEventModel } from './model/SportEvent.model';
+import { SportEvent } from 'types/Event';
+import { SaveEvent } from 'services/event/dto/SaveEvent';
 
 class EventRepository {
-  private eventModel: Model<SportEvent> = EventModel;
+  private eventModel: Model<SportEvent> = SportEventModel;
 
   public findAllByDisciplineId = (id: string) => {
     return this.eventModel.find({ disciplineId: id });

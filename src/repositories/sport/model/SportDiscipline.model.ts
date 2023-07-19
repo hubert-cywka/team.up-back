@@ -1,6 +1,9 @@
 import { model, Schema } from 'mongoose';
 import { SportDiscipline } from '../../../types/Sport';
 
-const SportDisciplineScheme = new Schema({ name: { required: true, unique: true, type: String } });
+const SportDisciplineSchema = new Schema(
+  { name: { required: true, unique: true, type: String } },
+  { timestamps: true }
+);
 
-export const SportDisciplineModel = model<SportDiscipline>('SportDiscipline', SportDisciplineScheme);
+export const SportDisciplineModel = model<SportDiscipline>('SportDiscipline', SportDisciplineSchema);

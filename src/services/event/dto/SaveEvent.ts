@@ -1,3 +1,3 @@
-import Event from '../../../types/events/Event.interface';
+import { SportEvent } from 'types/Event';
 
-export type SaveEvent = Omit<Event, '_id'>;
+export type SaveEvent = Omit<SportEvent, '_id'>;

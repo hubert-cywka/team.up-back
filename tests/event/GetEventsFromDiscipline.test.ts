@@ -1,7 +1,7 @@
 import UseCase from '../UseCase';
 import { HTTPStatus } from '../../src/helpers/HTTPStatus';
 
-describe.skip('Testing get events from discipline use case', () => {
+describe('Testing get events from discipline use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();
   });
@@ -13,9 +13,7 @@ describe.skip('Testing get events from discipline use case', () => {
       UseCase.SPORTS_COLLECTION,
       UseCase.SPORT_DISCIPLINE_SAVE_REQUEST.name
     );
-    await UseCase.admin
-      .post(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId))
-      .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST);
+    await UseCase.admin.post(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId)).send(UseCase.EVENT_CREATE_REQUEST);
   });
 
   describe(`GET ${UseCase.PATH_EVENTS} as any user`, () => {
@@ -24,6 +22,7 @@ describe.skip('Testing get events from discipline use case', () => {
         UseCase.SPORTS_COLLECTION,
         UseCase.SPORT_DISCIPLINE_SAVE_REQUEST.name
       );
+
       await UseCase.unauthenticated
         .get(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId))
         .send()
@@ -35,6 +34,7 @@ describe.skip('Testing get events from discipline use case', () => {
         UseCase.SPORTS_COLLECTION,
         UseCase.SPORT_DISCIPLINE_SAVE_REQUEST.name
       );
+
       const res = await UseCase.unauthenticated.get(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId)).send();
 
       expect(res.body).toBeTruthy();

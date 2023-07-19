@@ -1,11 +1,13 @@
 # Team.Up - backend, v.1.0.0
 
 ## Description
+
 Ever wanted to find a team to play some football or find a partner to go to gym? Team.Up allows you to do so! Create your own sport event or join existing one and keep up your healthy lifestyle!
 
 Team.Up backend application is created in Express.js and uses MongoDB. It is built on top of three-layer architecture.
 
 ### Frontend URL
+
 Frontend is available here: https://github.com/hejs22/team.up-ui
 
 ## Features
@@ -38,9 +40,10 @@ Frontend is available here: https://github.com/hejs22/team.up-ui
 - OpenAPI,
 - Logger.
 
-
 ## Coverage
+
 ![coverage.png](media/coverage.png)
 
 ## OpenApi
+
 https://app.swaggerhub.com/apis/HCYWKA/TeamUp/1.0.0

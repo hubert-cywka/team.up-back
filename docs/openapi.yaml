@@ -7,10 +7,10 @@ info:
 servers: [{ url: '/app' }]
 
 tags:
-  - name: sports
-    description: All available requests related to sports
+  - name: disciplines
+    description: All available requests related to sport disciplines
   - name: events
-    description: All available requests related to events
+    description: All available requests related to sport events
   - name: users
     description: All available requests related to users
   - name: auth
@@ -20,7 +20,7 @@ paths:
   /sports:
     get:
       tags:
-        - sports
+        - disciplines
       summary: Get all sport disciplines
       description: |
         Get all available sport disciplines
@@ -41,7 +41,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - sports
+        - disciplines
       summary: Add new sport discipline
       description: |
         Add new sport discipline
@@ -75,7 +75,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - sports
+        - disciplines
       summary: Update sport discipline
       description: |
         Update existing sport discipline
@@ -115,7 +115,7 @@ paths:
       security:
         - bearerAuth: []
       tags:
-        - sports
+        - disciplines
       summary: Delete sport discipline
       description: |
         Delete existing sport discipline
@@ -138,6 +138,156 @@ paths:
           description: User has not been authorized to access that resource
         '404':
           description: Sport discipline not found
+
+  /sports/{id}/events:
+    get:
+      tags:
+        - events
+      summary: Get all sport events from sport discipline
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+      description: |
+        Get all available sport disciplines
+
+        Allowed roles: ```ALL```
+      operationId: getSportEvents
+      responses:
+        '200':
+          description: Sport events were fetched successfuly
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportEvent'
+        '404':
+          description: Sport discipline not found
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Add new sport discipline
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+      description: |
+        Add new sport event in sport discipline
+
+        Allowed roles: ```ADMIN```
+      operationId: createSportEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventRequest'
+        required: true
+      responses:
+        '200':
+          description: Sport event added successfuly
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportEvent'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found
+
+  /sports/{disciplineID}/events/{eventID}:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Update sport event
+      description: |
+        Update existing event. Users can access this endpoint, but they can only update events created by them.
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: updateSportEvent
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventRequest'
+        required: true
+      responses:
+        '200':
+          description: Sport event updated successfuly
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportEvent'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found / Sport event not found
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Delete sport event
+      description: |
+        Delete existing event. Users can access this endpoint, but they can only delete events created by them.
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: deleteSportEvent
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      responses:
+        '200':
+          description: Sport event deleted successfuly
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found / Sport event not found
 
   /users:
     get:
@@ -363,6 +513,82 @@ components:
         name:
           type: string
           example: Football
+
+    SportEvent:
+      required:
+        - description
+        - location
+        - minPlayers
+        - maxPlayers
+        - startDate
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        description:
+          type: string
+          example: Two halves, 30 minutes each. No extra time in case of draw, we go straight to penalties
+        minPlayers:
+          type: number
+          example: 10
+        maxPlayers:
+          type: number
+          example: 22
+        startDate:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+        location:
+          $ref: '#/components/schemas/Location'
+        disciplineId:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        createdBy:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        createdAt:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+        updatedAt:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+
+    CreateEventRequest:
+      required:
+        - description
+        - location
+        - minPlayers
+        - maxPlayers
+        - startDate
+      type: object
+      properties:
+        description:
+          type: string
+          example: Two halves, 30 minutes each. No extra time in case of draw, we go straight to penalties
+        minPlayers:
+          type: number
+          example: 10
+        maxPlayers:
+          type: number
+          example: 22
+        startDate:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+        location:
+          $ref: '#/components/schemas/Location'
+
+    Location:
+      required:
+        - lat
+        - lng
+      type: object
+      properties:
+        lat:
+          type: number
+          example: 50.2135
+        lng:
+          type: number
+          example: 23.2345
 
     SignInRequest:
       required:
