@@ -10,35 +10,42 @@ Team.Up backend application is created in Express.js and uses MongoDB. It is bui
 
 Frontend is available here: https://github.com/hejs22/team.up-ui
 
+## Built with
+Express.js, Node.js, TypeScript, MongoDB. For tests I have used Jest with Supertest.
+
 ## Features
 
 ### What can user do?
 
-- create account, sign in and sign out,
-- authenticate with usage of JWT,
-- refresh set of auth tokens,
-- access own details,
-- access list of sport disciplines,
-- access list of sport events,
-- create own sport events,
-- modify or delete sport events created by that user.
+- create account, sign in and sign out ✅
+- authenticate with usage of JWT ✅
+- refresh set of auth tokens ✅
+- access own details ✅
+- access list of sport disciplines ✅
+- access list of sport events ✅
+- create own sport events ✅
+- modify or delete sport events created by that user ✅
+- enroll for any sport event ⌛
+- remove enrollment ⌛
 
 ### What can admin do?
 
-- everything user can do,
-- access list of users' details,
-- change other users' roles,
-- add, modify or delete sport disciplines,
-- modify or delete sport events created by anyone.
+- everything user can do ✅
+- access list of users' details ✅
+- change other users' roles ✅
+- remove users accounts ⌛
+- add, modify or delete sport disciplines ✅
+- modify or delete sport events created by anyone ✅
 
 ### Additional implemented things
 
-- Migrations system,
-- Integration tests with usage of Jest,
-- High code coverage of each use case,
-- Configuration via envs,
-- OpenAPI,
-- Logger.
+- Migrations system ✅
+- Integration tests based on use cases ✅
+- High code coverage of each use case ✅
+- Configuration via envs ✅
+- OpenAPI ✅
+- Logger ✅
+- Tests environment ✅
 
 ## Coverage
 

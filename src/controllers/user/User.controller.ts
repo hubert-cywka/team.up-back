@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import authTokenValidation from '../../middleware/authentication/AuthTokenValidation.middleware';
 import UserService from '../../services/user/User.service';
-import UserNotFoundResponse from '../../services/user/dto/UserNotFoundResponse';
+import UserNotFoundResponse from './dto/UserNotFoundResponse';
 import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import ChangeRoleRequest from './dto/ChangeRoleRequest.dto';
