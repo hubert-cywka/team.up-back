@@ -18,7 +18,8 @@
     "strictNullChecks": true /* When type checking, take into account 'null' and 'undefined'. */,
     "strictFunctionTypes": true /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */,
     "noImplicitThis": true /* Enable error reporting when 'this' is given the type 'any'. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "moduleResolution": "NodeNext"
   },
   "include": ["**/*.ts", "**/*.d.ts", "**/*.tsx", "src"]
 }

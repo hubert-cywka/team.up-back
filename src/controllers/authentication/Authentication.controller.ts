@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import SignUpRequestBody from './dto/SignUpRequestBody.dto';
 import SignInRequestBody from './dto/SignInRequestBody.dto';
 import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse.dto';
-import AuthenticationService from '../../services/authentication/Authentication.service';
 import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse.dto';
-import UserService from '../../services/user/User.service';
-import { HTTPStatus } from '../../helpers/HTTPStatus';
 import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse.dto';
 import InvalidRefreshTokenResponse from './dto/InvalidRefreshTokenResponse.dto';
-import { Controller } from '../../types/Controller';
-import { RequestWithUser } from '../../types/User';
+import { Controller } from '../../shared/types/Controller';
+import AuthenticationService from '../../services/authentication/Authentication.service';
+import UserService from '../../services/user/User.service';
+import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
+import { HTTPStatus } from '../../shared/helpers/HTTPStatus';
+import { RequestWithUser } from '../../shared/types/User';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -67,14 +67,14 @@ class AuthenticationController implements Controller {
     const refreshToken: string = requestWithUser.cookies.RefreshToken;
 
     if (!refreshToken) {
-      return next(new InvalidAuthTokenResponse());
+      return next(new InvalidRefreshTokenResponse());
     }
 
     const user = await this.authenticationService.getUserFromToken(refreshToken, 'RefreshToken');
 
     if (user) {
       response.setHeader('Set-Cookie', await this.authenticationService.buildTokenCookies(user));
-      response.sendStatus(HTTPStatus.OK);
+      response.send(this.authenticationService.prepareSignInResponseFromUser(user));
     } else {
       next(new InvalidRefreshTokenResponse());
     }

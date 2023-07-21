@@ -1,8 +1,8 @@
 import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { RequestHandler } from 'express';
-import ErrorResponse from '../../helpers/ErrorResponse';
-import { HTTPStatus } from '../../helpers/HTTPStatus';
+import ErrorResponse from '../../shared/helpers/ErrorResponse';
+import { HTTPStatus } from '../../shared/helpers/HTTPStatus';
 
 function dtoValidation<T>(type: any, allowSkippingCertainProperties: boolean = false): RequestHandler {
   return (req, res, next) => {

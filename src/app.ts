@@ -1,17 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-import { Controller } from 'types/Controller';
 import mongoose from 'mongoose';
 import errorMiddleware from './middleware/error-handling/Error.middleware';
 import cookieParser from 'cookie-parser';
 import requestLogger from './middleware/logging/RequestLogger.middleware';
-import Logger from './helpers/Logger';
-import DatabaseConfig from './config/DatabaseConfig';
+import Logger from './shared/helpers/Logger';
+import DatabaseConfig from './shared/config/DatabaseConfig';
 import cors from 'cors';
-import ResourceNotFoundResponse from './helpers/ResourceNotFoundResponse';
-import ApplicationConfig from './config/ApplicationConfig';
+import ResourceNotFoundResponse from './shared/helpers/ResourceNotFoundResponse';
+import ApplicationConfig from './shared/config/ApplicationConfig';
 import 'reflect-metadata';
+import { Controller } from './shared/types/Controller';
 
 class App {
   public app: express.Application;

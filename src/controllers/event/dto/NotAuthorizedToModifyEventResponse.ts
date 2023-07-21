@@ -1,5 +1,5 @@
-import ErrorResponse from '../../../helpers/ErrorResponse';
-import { HTTPStatus } from '../../../helpers/HTTPStatus';
+import ErrorResponse from '../../../shared/helpers/ErrorResponse';
+import { HTTPStatus } from '../../../shared/helpers/HTTPStatus';
 
 class NotAuthorizedToModifyEventResponse extends ErrorResponse {
   constructor() {

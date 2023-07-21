@@ -11,6 +11,7 @@ Team.Up backend application is created in Express.js and uses MongoDB. It is bui
 Frontend is available here: https://github.com/hejs22/team.up-ui
 
 ## Built with
+
 Express.js, Node.js, TypeScript, MongoDB. For tests I have used Jest with Supertest.
 
 ## Features

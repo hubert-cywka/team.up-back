@@ -1,4 +1,4 @@
-import DatabaseConfig from './src/config/DatabaseConfig';
+import DatabaseConfig from './src/shared/config/DatabaseConfig';
 import process from 'process';
 
 require('dotenv').config();

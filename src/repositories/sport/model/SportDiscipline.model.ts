@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { SportDiscipline } from '../../../types/Sport';
+import { SportDiscipline } from '../../../shared/types/Sport';
 
 const SportDisciplineSchema = new Schema(
   { name: { required: true, unique: true, type: String } },

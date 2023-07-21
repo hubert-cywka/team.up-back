@@ -1,6 +1,6 @@
-import { HTTPStatus } from '../../src/helpers/HTTPStatus';
+import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
-import { UserRole } from '../../src/types/UserRole';
+import { UserRole } from '../../src/shared/types/UserRole';
 
 describe('Testing get all sport discipline use case', () => {
   afterAll(async () => {

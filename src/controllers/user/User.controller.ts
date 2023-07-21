@@ -5,9 +5,9 @@ import UserNotFoundResponse from './dto/UserNotFoundResponse';
 import authorizationValidation from '../../middleware/authorization/AuthorizationValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import ChangeRoleRequest from './dto/ChangeRoleRequest.dto';
-import { RequestWithUser } from '../../types/User';
-import { Controller } from '../../types/Controller';
-import { UserRole } from '../../types/UserRole';
+import { RequestWithUser } from '../../shared/types/User';
+import { Controller } from '../../shared/types/Controller';
+import { UserRole } from '../../shared/types/UserRole';
 
 class UserController implements Controller {
   public path = '/users';

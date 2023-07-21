@@ -1,13 +1,13 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import TokensConfig from '../../config/TokensConfig';
+import TokensConfig from '../../shared/config/TokensConfig';
 import SignInRequestBody from '../../controllers/authentication/dto/SignInRequestBody.dto';
 import UserRepository from '../../repositories/user/User.repository';
 import SignInResponse from '../../controllers/authentication/dto/SignInResponse.dto';
 import TokenRepository from '../../repositories/token/Token.repository';
 import UseCase from '../../../tests/UseCase';
-import { User } from '../../types/User';
-import { AuthToken, AuthTokenData } from '../../types/Token';
+import { User } from '../../shared/types/User';
+import { AuthToken, AuthTokenData } from '../../shared/types/Token';
 
 class AuthenticationService {
   private userRepository: UserRepository;

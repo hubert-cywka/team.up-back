@@ -6,8 +6,8 @@ import ChangeRoleRequest from '../src/controllers/user/dto/ChangeRoleRequest.dto
 import SignUpRequestBody from '../src/controllers/authentication/dto/SignUpRequestBody.dto';
 import SignInRequestBody from '../src/controllers/authentication/dto/SignInRequestBody.dto';
 import CreateEventRequest from '../src/controllers/event/dto/CreateEventRequest.dto';
-import { UserRole } from '../src/types/UserRole';
-import { SportDiscipline } from '../src/types/Sport';
+import { UserRole } from '../src/shared/types/UserRole';
+import { SportDiscipline } from '../src/shared/types/Sport';
 
 const app = require('../src/server');
 

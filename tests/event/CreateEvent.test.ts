@@ -1,5 +1,5 @@
 import UseCase from '../UseCase';
-import { HTTPStatus } from '../../src/helpers/HTTPStatus';
+import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 
 describe('Testing create event use case', () => {
   afterAll(async () => {
@@ -12,7 +12,7 @@ describe('Testing create event use case', () => {
   });
 
   describe(`POST ${UseCase.PATH_EVENTS} as any authenticated user`, () => {
-    it(`should return ${HTTPStatus.OK} if request is correct`, async () => {
+    it(`should return ${HTTPStatus.CREATED} if request is correct`, async () => {
       const sportDisciplineId = await UseCase.findIdByNameInCollection(
         UseCase.SPORTS_COLLECTION,
         UseCase.SPORT_DISCIPLINE_SAVE_REQUEST.name
@@ -21,7 +21,7 @@ describe('Testing create event use case', () => {
       await UseCase.admin
         .post(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId))
         .send(UseCase.EVENT_CREATE_REQUEST)
-        .expect(HTTPStatus.OK);
+        .expect(HTTPStatus.CREATED);
     });
 
     it(`should save event if request is correct`, async () => {
@@ -33,8 +33,7 @@ describe('Testing create event use case', () => {
 
       await UseCase.admin
         .post(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId))
-        .send(UseCase.EVENT_CREATE_REQUEST)
-        .expect(HTTPStatus.OK);
+        .send(UseCase.EVENT_CREATE_REQUEST);
 
       const sizeAfter = await UseCase.getCollectionLength(UseCase.EVENTS_COLLECTION);
       expect(sizeAfter).toBe(sizeBefore + 1);

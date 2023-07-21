@@ -1,4 +1,4 @@
-import { HTTPStatus } from '../../src/helpers/HTTPStatus';
+import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 import CreateSportDisciplineRequest from '../../src/controllers/sport/dto/CreateDisciplineRequest.dto';
 
@@ -12,8 +12,11 @@ describe('Testing create sport discipline use case', () => {
   });
 
   describe(`POST ${UseCase.PATH_SPORTS} as admin`, () => {
-    it(`should return ${HTTPStatus.OK} if discipline does not exist yet`, async () => {
-      await UseCase.admin.post(UseCase.PATH_SPORTS).send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST).expect(HTTPStatus.OK);
+    it(`should return ${HTTPStatus.CREATED} if discipline does not exist yet`, async () => {
+      await UseCase.admin
+        .post(UseCase.PATH_SPORTS)
+        .send(UseCase.SPORT_DISCIPLINE_SAVE_REQUEST)
+        .expect(HTTPStatus.CREATED);
     });
 
     it(`should save discipline if it does not exist yet`, async () => {

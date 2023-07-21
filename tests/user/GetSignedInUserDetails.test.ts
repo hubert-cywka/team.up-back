@@ -1,4 +1,4 @@
-import { HTTPStatus } from '../../src/helpers/HTTPStatus';
+import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 
 describe('Testing get signed in user details use case', () => {

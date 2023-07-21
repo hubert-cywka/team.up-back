@@ -7,8 +7,9 @@ import NotAuthorizedToModifyEventResponse from './dto/NotAuthorizedToModifyEvent
 import authTokenValidation from '../../middleware/authentication/AuthTokenValidation.middleware';
 import dtoValidation from '../../middleware/error-handling/DtoValidation.middleware';
 import CreateEventRequest from './dto/CreateEventRequest.dto';
-import { Controller } from '../../types/Controller';
-import { RequestWithUser } from '../../types/User';
+import { Controller } from '../../shared/types/Controller';
+import { RequestWithUser } from '../../shared/types/User';
+import { HTTPStatus } from '../../shared/helpers/HTTPStatus';
 
 class EventController implements Controller {
   public path = '/sports';
@@ -67,7 +68,7 @@ class EventController implements Controller {
       requestWithUser.user._id,
       requestWithUser.params.id
     );
-    response.send(savedEvent);
+    response.status(HTTPStatus.CREATED).send(savedEvent);
   };
 
   private updateEvent = async (request: Request, response: Response, next: NextFunction) => {

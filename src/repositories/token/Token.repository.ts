@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import { RefreshTokenModel } from './model/RefreshToken.model';
-import { AuthToken } from '../../types/Token';
+import { AuthToken } from '../../shared/types/Token';
 
 class TokenRepository {
   private refreshTokenModel: Model<AuthToken> = RefreshTokenModel;

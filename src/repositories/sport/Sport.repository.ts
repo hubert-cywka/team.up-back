@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { SportDisciplineModel } from './model/SportDiscipline.model';
 import { SaveSportDiscipline } from '../../services/sport/dto/SaveSportDiscipline';
-import { SportDiscipline } from '../../types/Sport';
+import { SportDiscipline } from '../../shared/types/Sport';
 
 class SportRepository {
   private sportDisciplineModel: Model<SportDiscipline> = SportDisciplineModel;

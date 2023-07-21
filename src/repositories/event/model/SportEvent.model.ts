@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { SportEvent } from 'types/Event';
+import { SportEvent } from 'shared/types/Event';
 
 const LocationSchema = new Schema({
   lat: { required: true, type: Number },

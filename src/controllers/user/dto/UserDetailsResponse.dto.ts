@@ -1,4 +1,4 @@
-import { UserRole } from '../../../types/UserRole';
+import { UserRole } from '../../../shared/types/UserRole';
 
 class UserDetailsResponse {
   public _id: string;

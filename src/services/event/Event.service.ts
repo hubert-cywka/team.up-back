@@ -1,9 +1,9 @@
 import EventRepository from '../../repositories/event/Event.repository';
 import { SaveEvent } from './dto/SaveEvent';
 import CreateEventRequest from '../../controllers/event/dto/CreateEventRequest.dto';
-import { User } from '../../types/User';
-import { SportEvent } from '../../types/Event';
-import { UserRole } from '../../types/UserRole';
+import { User } from '../../shared/types/User';
+import { SportEvent } from '../../shared/types/Event';
+import { UserRole } from '../../shared/types/UserRole';
 
 class EventService {
   private eventRepository: EventRepository;

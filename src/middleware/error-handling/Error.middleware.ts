@@ -1,6 +1,6 @@
-import ErrorResponse from 'helpers/ErrorResponse';
 import { NextFunction, Request, Response } from 'express';
-import Logger from '../../helpers/Logger';
+import ErrorResponse from '../../shared/helpers/ErrorResponse';
+import Logger from '../../shared/helpers/Logger';
 
 function errorMiddleware(error: ErrorResponse, request: Request, response: Response, next: NextFunction) {
   const INTERNAL_ERROR_MESSAGE = 'Internal server error. Something went wrong.';

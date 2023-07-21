@@ -2,9 +2,9 @@ import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/User.repository';
 import SignUpRequestBody from '../../controllers/authentication/dto/SignUpRequestBody.dto';
 import UserDetailsResponse from '../../controllers/user/dto/UserDetailsResponse.dto';
-import { DEFAULT_IMAGE } from '../../helpers/Constants';
-import { User } from '../../types/User';
-import { UserRole } from '../../types/UserRole';
+import { DEFAULT_IMAGE } from '../../shared/helpers/Constants';
+import { User } from '../../shared/types/User';
+import { UserRole } from '../../shared/types/UserRole';
 
 class UserService {
   private userRepository: UserRepository;

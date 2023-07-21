@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import { SportEventModel } from './model/SportEvent.model';
-import { SportEvent } from 'types/Event';
+import { SportEvent } from 'shared/types/Event';
 import { SaveEvent } from 'services/event/dto/SaveEvent';
 
 class EventRepository {

@@ -1,5 +1,5 @@
 import { Db } from 'mongodb';
-import { DEFAULT_IMAGE } from '../src/helpers/Constants';
+import { DEFAULT_IMAGE } from '../src/shared/helpers/Constants';
 
 module.exports = {
   async up(db: Db) {

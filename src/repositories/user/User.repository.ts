@@ -1,8 +1,8 @@
 import { Model } from 'mongoose';
 import { UserModel } from './model/User.model';
 import { SaveUser } from '../../services/user/dto/SaveUser';
-import { User } from '../../types/User';
-import { UserRole } from '../../types/UserRole';
+import { User } from '../../shared/types/User';
+import { UserRole } from '../../shared/types/UserRole';
 
 class UserRepository {
   private userModel: Model<User> = UserModel;

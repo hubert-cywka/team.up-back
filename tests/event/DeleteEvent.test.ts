@@ -1,5 +1,5 @@
 import UseCase from '../UseCase';
-import { HTTPStatus } from '../../src/helpers/HTTPStatus';
+import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 
 describe('Testing delete event use case', () => {
   afterAll(async () => {
