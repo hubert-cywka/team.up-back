@@ -9,7 +9,7 @@ import CreateEventRequest from '../src/controllers/event/dto/CreateEventRequest.
 import { UserRole } from '../src/shared/types/UserRole';
 import { SportDiscipline } from '../src/shared/types/Sport';
 
-const app = require('../src/server');
+const app = require('../src');
 
 export default class UseCase {
   public static BASE_PATH = '/app';

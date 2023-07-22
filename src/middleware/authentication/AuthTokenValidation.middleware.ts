@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import InvalidAuthTokenResponseDto from '../../controllers/authentication/dto/InvalidAuthTokenResponse.dto';
-import { authenticationService } from '../../server';
+import { authenticationService } from '../../index';
 import { RequestWithUser } from '../../shared/types/User';
 
 async function authTokenValidation(request: Request, response: Response, next: NextFunction) {
