@@ -11,6 +11,7 @@ import cors from 'cors';
 import ResourceNotFoundResponse from './shared/helpers/ResourceNotFoundResponse';
 import ApplicationConfig from './shared/config/ApplicationConfig';
 import 'reflect-metadata';
+import rateLimiter from 'express-rate-limit';
 import { Controller } from './shared/types/Controller';
 
 class App {
@@ -30,6 +31,7 @@ class App {
   }
 
   private initializeMiddlewares() {
+    this.app.use(this.initializeRateLimiter());
     this.app.use(requestLogger);
     this.app.use(cors(this.getCorsSettings()));
     this.app.use(helmet());
@@ -48,6 +50,10 @@ class App {
       next(new ResourceNotFoundResponse());
     });
     this.app.use(errorMiddleware);
+  }
+
+  private initializeRateLimiter() {
+    return rateLimiter({ windowMs: ApplicationConfig.rateLimitTimespan, max: ApplicationConfig.rateLimit });
   }
 
   private initializeDatabaseConnection() {

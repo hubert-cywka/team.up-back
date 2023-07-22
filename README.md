@@ -85,3 +85,7 @@ https://app.swaggerhub.com/apis/HCYWKA/TeamUp/1.0.0
 `JWT_SECRET` - JWT secret
 
 `REFRESH_TOKEN_SECRET` - Refresh token secret
+
+`RATE_LIMIT_TIMESPAN` - Request rate limit timespan in ms
+
+`RATE_LIMIT` - Request rate limit
