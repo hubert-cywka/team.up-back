@@ -55,3 +55,33 @@ Express.js, Node.js, TypeScript, MongoDB. For tests I have used Jest with Supert
 ## OpenApi
 
 https://app.swaggerhub.com/apis/HCYWKA/TeamUp/1.0.0
+
+## Configuration
+
+`PORT` - port on which server should listen
+
+`ADMIN_PASSWORD` - password for default admin account
+
+`ADMIN_EMAIL` - admin for default admin account
+
+`FRONTEND_URL` - Frontend URLs, can list multiple, eg. http://localhost:3000,https://site.com,https://domain.com
+
+`MONGO_USER` - MongoDB user for production environment
+
+`MONGO_PASSWORD` - MongoDB user's password for production environment
+
+`MONGO_PATH` - MongoDB path for production environment
+
+`MONGO_TEST_USER` - MongoDB user for test environment
+
+`MONGO_TEST_PASSWORD` - MongoDB user's password for test environment
+
+`MONGO_TEST_PATH` - MongoDB path for test environment
+
+`JWT_EXPIRATION_TIME` - JWT expiration time in seconds
+
+`REFRESH_TOKEN_EXPIRATION_TIME` - Refresh token expiration time in seconds
+
+`JWT_SECRET` - JWT secret
+
+`REFRESH_TOKEN_SECRET` - Refresh token secret
