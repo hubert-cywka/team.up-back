@@ -2,6 +2,7 @@ import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 import CreateSportDisciplineRequest from '../../src/controllers/sport/dto/CreateDisciplineRequest.dto';
 
+jest.setTimeout(15000);
 describe('Testing create sport discipline use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();

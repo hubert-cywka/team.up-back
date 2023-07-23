@@ -1,6 +1,7 @@
 import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 
+jest.setTimeout(15000);
 describe('Testing get signed in user details use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();

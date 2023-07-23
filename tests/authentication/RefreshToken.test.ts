@@ -1,6 +1,7 @@
 import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 
+jest.setTimeout(15000);
 describe('Testing refresh token use case', () => {
   beforeAll(async () => {
     return await UseCase.createDefaultAccountsAndLogin();

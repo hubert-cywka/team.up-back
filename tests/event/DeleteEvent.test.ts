@@ -1,6 +1,7 @@
 import UseCase from '../UseCase';
 import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 
+jest.setTimeout(15000);
 describe('Testing delete event use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();

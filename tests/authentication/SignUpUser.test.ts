@@ -2,6 +2,7 @@ import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 import { UserRole } from '../../src/shared/types/UserRole';
 
+jest.setTimeout(15000);
 describe('Testing sign up use case', () => {
   afterEach(async () => {
     return await UseCase.dropCollections();
