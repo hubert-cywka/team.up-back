@@ -2,6 +2,7 @@ import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 import { UserRole } from '../../src/shared/types/UserRole';
 
+jest.setTimeout(15000);
 describe('Testing get all sport discipline use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();

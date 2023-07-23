@@ -1,7 +1,8 @@
 # Team.Up - backend, v.1.0.0
 
-## Description
+Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app) 
 
+## Description 
 Ever wanted to find a team to play some football or find a partner to go to gym? Team.Up allows you to do so! Create your own sport event or join existing one and keep up your healthy lifestyle!
 
 Team.Up backend application is created in Express.js and uses MongoDB. It is built on top of three-layer architecture.
@@ -13,6 +14,15 @@ Frontend is available here: https://github.com/hejs22/team.up-ui
 ## Built with
 
 Express.js, Node.js, TypeScript, MongoDB. For tests I have used Jest with Supertest.
+
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 ## Features
 

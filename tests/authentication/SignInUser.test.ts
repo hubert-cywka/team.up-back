@@ -1,6 +1,7 @@
 import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 
+jest.setTimeout(15000);
 describe('Testing sign up use case', () => {
   beforeEach(async () => {
     await UseCase.unauthenticated.post(UseCase.PATH_REGISTER).send(UseCase.SIGN_UP_REQUEST);

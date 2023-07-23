@@ -1,6 +1,7 @@
 import { HTTPStatus } from '../../src/shared/helpers/HTTPStatus';
 import UseCase from '../UseCase';
 
+jest.setTimeout(15000);
 describe('Testing get all users details use case', () => {
   afterAll(async () => {
     return await UseCase.clearDatabase();

@@ -4,7 +4,7 @@ info:
   description: ''
   version: 1.0.0
 
-servers: [{ url: '/app' }]
+servers: [{ url: 'team-up-back.vercel.app/app' }]
 
 tags:
   - name: disciplines
