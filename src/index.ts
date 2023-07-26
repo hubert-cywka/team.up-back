@@ -12,6 +12,7 @@ import EventRepository from './repositories/event/Event.repository';
 import EventService from './services/event/Event.service';
 import EventController from './controllers/event/Event.controller';
 import TokenRepository from './repositories/token/Token.repository';
+import UserEventRepository from './repositories/userevent/UserEvent.repository';
 
 require('express-async-errors');
 
@@ -19,18 +20,19 @@ const userRepository = new UserRepository();
 const sportRepository = new SportRepository();
 const eventRepository = new EventRepository();
 const tokenRepository = new TokenRepository();
+const userEventRepository = new UserEventRepository();
 
 const userService = new UserService(userRepository);
 export const authenticationService = new AuthenticationService(userRepository, tokenRepository);
-const sportService = new SportService(sportRepository);
-const eventService = new EventService(eventRepository);
+const sportService = new SportService(sportRepository, eventRepository);
+const eventService = new EventService(eventRepository, userEventRepository);
 
 const app = new App(
   [
     new SportController(sportService, sportRepository),
     new AuthenticationController(authenticationService, userService),
-    new UserController(userService),
-    new EventController(eventService, sportService)
+    new UserController(userService, eventService),
+    new EventController(eventService, sportService, userService)
   ],
   ApplicationConfig.port
 );

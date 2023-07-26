@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export interface SportEvent {
   _id: string;
   minPlayers: number;
@@ -14,4 +16,13 @@ export interface SportEvent {
 export interface GeoPosition {
   lat: number;
   lng: number;
+}
+
+export interface UserEvent {
+  userId: string;
+  eventId: string;
+}
+
+export interface SportEventWithUsers extends SportEvent {
+  users: User[];
 }

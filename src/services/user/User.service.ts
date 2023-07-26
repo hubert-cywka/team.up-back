@@ -18,6 +18,12 @@ class UserService {
     return new UserDetailsResponse(user._id, user.name, user.email, user.role, user.image);
   };
 
+  public prepareDetailsFromUsers = (users: User[]) => {
+    return users.map((user) => {
+      return this.prepareUserDetailsFromUser(user);
+    });
+  };
+
   public prepareAllUsersDetails = async () => {
     const users = await this.userRepository.findAllUsers();
     return users.map((user) => {

@@ -1,11 +1,16 @@
 import SportRepository from '../../repositories/sport/Sport.repository';
 import { SaveSportDiscipline } from './dto/SaveSportDiscipline';
+import EventRepository from '../../repositories/event/Event.repository';
+import moongose from 'mongoose';
+import Logger from '../../shared/helpers/Logger';
 
 class SportService {
   private sportRepository: SportRepository;
+  private eventRepository: EventRepository;
 
-  constructor(sportRepository: SportRepository) {
+  constructor(sportRepository: SportRepository, eventRepository: EventRepository) {
     this.sportRepository = sportRepository;
+    this.eventRepository = eventRepository;
   }
 
   public existsById = async (id: string) => {
