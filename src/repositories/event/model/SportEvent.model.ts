@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { SportEvent } from 'shared/types/Event';
+import { UserEventModel } from '../../userevent/model/UserEvent.model';
 
 const LocationSchema = new Schema({
   lat: { required: true, type: Number },
@@ -17,6 +18,9 @@ const SportEventSchema = new Schema(
     createdBy: { ref: 'User', type: Schema.Types.ObjectId }
   },
   { timestamps: true }
-);
+).pre('findOneAndDelete', { document: false, query: true }, async function () {
+  const event = await this.model.findOne(this.getFilter());
+  await UserEventModel.deleteMany({ eventId: event._id });
+});
 
 export const SportEventModel = model<SportEvent>('SportEvent', SportEventSchema);

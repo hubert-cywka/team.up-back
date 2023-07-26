@@ -139,7 +139,7 @@ paths:
     get:
       tags:
         - events
-      summary: Get all sport events from sport discipline
+      summary: Get all sport events from sport discipline including list of enrolled users
       parameters:
         - in: path
           name: id
@@ -160,7 +160,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SportEvent'
+                  $ref: '#/components/schemas/SportEventWithUsers'
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserDetails'
         '404':
           description: Sport discipline not found
 
@@ -266,7 +270,7 @@ paths:
           schema:
             type: string
           required: true
-          description: ID of the sport event
+          description: ID of the sport discipline
         - in: path
           name: eventID
           schema:
@@ -282,6 +286,119 @@ paths:
           description: User has not been authorized to access that resource
         '404':
           description: Sport discipline not found / Sport event not found
+
+  /sports/{disciplineID}/events/{eventID}/enrollment:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Get list of enrolled users
+      description: |
+        Gets lists of users enrolled for sport event with given id
+
+        Allowed roles: ```ADMIN```
+      operationId: getSportEventEnrollments
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      responses:
+        '200':
+          description: List of users fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDetails'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User doesn't have access to that resource
+        '404':
+          description: Sport discipline not found / Sport event not found
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Enroll for event
+      description: |
+        Adds enrollment for event with given id for user that sends request
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: addSportEventEnrollment
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      responses:
+        '200':
+          description: Sport event enrollment added successfuly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportEvent'
+        '401':
+          description: User couldn't be authenticated
+        '404':
+          description: Sport discipline not found / Sport event not found
+        '409':
+          description: User was already enrolled for this event
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Remove enrollment from event
+      description: |
+        Removes enrollment for event with given id for user that sends request
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: deleteSportEventEnrollment
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      responses:
+        '200':
+          description: Sport event enrollment deleted successfuly
+        '401':
+          description: User couldn't be authenticated
+        '404':
+          description: Sport discipline not found / Sport event not found
+        '409':
+          description: User was never enrolled for this event
 
   /users:
     get:
@@ -334,6 +451,30 @@ paths:
           description: User has not been authorized to access that resource
         '404':
           description: User does not exist
+
+  /users/me/enrollments:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Get list of events that signed in user has enrolled for
+      description: |
+        Gets lists of events that signed in user has enrolled for
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: getUserEventsOfSignedInUser
+      responses:
+        '200':
+          description: List of events fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SportEventWithUsers'
+        '401':
+          description: User couldn't be authenticated
 
   /users/{id}:
     patch:
@@ -524,6 +665,50 @@ components:
         _id:
           type: string
           example: 507f1f77bcf86cd799439011
+        description:
+          type: string
+          example: Two halves, 30 minutes each. No extra time in case of draw, we go straight to penalties
+        minPlayers:
+          type: number
+          example: 10
+        maxPlayers:
+          type: number
+          example: 22
+        startDate:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+        location:
+          $ref: '#/components/schemas/Location'
+        disciplineId:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        createdBy:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        createdAt:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+        updatedAt:
+          type: string
+          example: 2023-07-17T16:54:29.327Z
+
+    SportEventWithUsers:
+      required:
+        - description
+        - location
+        - minPlayers
+        - maxPlayers
+        - startDate
+        - users
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDetails'
         description:
           type: string
           example: Two halves, 30 minutes each. No extra time in case of draw, we go straight to penalties

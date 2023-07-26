@@ -8,14 +8,17 @@ import ChangeRoleRequest from './dto/ChangeRoleRequest.dto';
 import { RequestWithUser } from '../../shared/types/User';
 import { Controller } from '../../shared/types/Controller';
 import { UserRole } from '../../shared/types/UserRole';
+import EventService from '../../services/event/Event.service';
 
 class UserController implements Controller {
   public path = '/users';
   public router = Router();
   private userService: UserService;
+  private eventService: EventService;
 
-  constructor(userService: UserService) {
+  constructor(userService: UserService, eventService: EventService) {
     this.userService = userService;
+    this.eventService = eventService;
     this.initializeRoutes();
   }
 
@@ -29,7 +32,8 @@ class UserController implements Controller {
         dtoValidation(ChangeRoleRequest),
         authorizationValidation([UserRole.ADMIN]),
         this.changeUserRole
-      );
+      )
+      .get(this.path.concat('/me/enrollments'), authTokenValidation, this.getAllEnrollmentsOfCurrentUser);
   }
 
   getAllUsersDetails = async (request: Request, response: Response, next: NextFunction) => {
@@ -52,6 +56,13 @@ class UserController implements Controller {
     } else {
       next(new UserNotFoundResponse());
     }
+  };
+
+  private getAllEnrollmentsOfCurrentUser = async (request: Request, response: Response, next: NextFunction) => {
+    const requestWithUser = request as RequestWithUser;
+    const user = requestWithUser.user;
+
+    response.send(await this.eventService.getEnrollmentsOfUserByUserId(user._id));
   };
 }
 

@@ -16,9 +16,11 @@ export default class UseCase {
 
   public static PATH_USERS = this.BASE_PATH.concat('/users');
   public static PATH_USERS_ME = this.PATH_USERS.concat('/me');
+  public static PATH_USER_ENROLLMENTS = this.PATH_USERS_ME.concat('/enrollments');
 
   public static PATH_SPORTS = this.BASE_PATH.concat('/sports');
   public static PATH_EVENTS = this.PATH_SPORTS.concat('/:id/events');
+  public static PATH_EVENT_ENROLLMENT = this.PATH_SPORTS.concat('/:id/events/:eventId/enrollment');
 
   public static PATH_AUTH = this.BASE_PATH.concat('/auth');
   public static PATH_LOGIN = this.PATH_AUTH.concat('/login');
@@ -28,6 +30,7 @@ export default class UseCase {
   public static SPORTS_COLLECTION = 'sportdisciplines';
   public static USERS_COLLECTION = 'users';
   public static EVENTS_COLLECTION = 'sportevents';
+  public static USER_EVENTS_COLLECTION = 'userevents';
 
   public static SPORT_DISCIPLINE: SportDiscipline = { _id: 'a12c', name: 'Volleyball' };
   public static UPDATED_SPORT_DISCIPLINE: SportDiscipline = { _id: 'c21a', name: 'Basketball' };
@@ -127,7 +130,11 @@ export default class UseCase {
   };
 
   public static findFirstInCollection = async (collection: string) => {
-    return await mongoose.connection.db.collection(collection).findOne();
+    const res = await mongoose.connection.db.collection(collection).findOne();
+    if (!res) {
+      throw Error(`Failed to find document in ${collection} collection.`);
+    }
+    return res;
   };
 
   public static prepareFakeIdFromId = (id: string) => {

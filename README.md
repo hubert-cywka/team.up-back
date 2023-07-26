@@ -1,8 +1,16 @@
 # Team.Up - backend, v.1.0.0
 
-Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app) 
+<<<<<<< HEAD
+Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app)
+=======
+Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app)
 
-## Description 
+## Description
+
+> > > > > > > 8e957a3 (TU-31: Updated openapi and readme with deployment links)
+
+## Description
+
 Ever wanted to find a team to play some football or find a partner to go to gym? Team.Up allows you to do so! Create your own sport event or join existing one and keep up your healthy lifestyle!
 
 Team.Up backend application is created in Express.js and uses MongoDB. It is built on top of three-layer architecture.
@@ -36,8 +44,10 @@ Express.js, Node.js, TypeScript, MongoDB. For tests I have used Jest with Supert
 - access list of sport events ✅
 - create own sport events ✅
 - modify or delete sport events created by that user ✅
-- enroll for any sport event ⌛
-- remove enrollment ⌛
+- enroll for any sport event ✅
+- remove enrollment ✅
+- get list of events user is enrolled for ✅
+- get list of users enrolled for an event ✅
 
 ### What can admin do?
 

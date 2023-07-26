@@ -40,6 +40,21 @@ describe('Testing create event use case', () => {
       expect(sizeAfter).toBe(sizeBefore + 1);
     });
 
+    it(`should also enroll user that created event automatically`, async () => {
+      const sportDisciplineId = await UseCase.findIdByNameInCollection(
+        UseCase.SPORTS_COLLECTION,
+        UseCase.SPORT_DISCIPLINE_SAVE_REQUEST.name
+      );
+
+      const enrollmentsCountBefore = await UseCase.getCollectionLength(UseCase.USER_EVENTS_COLLECTION);
+      await UseCase.admin
+        .post(UseCase.PATH_EVENTS.replace(':id', sportDisciplineId))
+        .send(UseCase.EVENT_CREATE_REQUEST);
+      const enrollmentsCountAfter = await UseCase.getCollectionLength(UseCase.USER_EVENTS_COLLECTION);
+
+      expect(enrollmentsCountAfter).toBe(enrollmentsCountBefore + 1);
+    });
+
     it(`should return ${HTTPStatus.BAD_REQUEST} if request is not correct`, async () => {
       const sportDisciplineId = await UseCase.findIdByNameInCollection(
         UseCase.SPORTS_COLLECTION,

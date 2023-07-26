@@ -23,6 +23,10 @@ class UserRepository {
     return this.userModel.findOne({ _id: id });
   };
 
+  public deleteUserById = (id: string) => {
+    return this.userModel.findOneAndDelete({ _id: id });
+  };
+
   public saveUser = (user: SaveUser) => {
     return this.userModel.create(user);
   };
