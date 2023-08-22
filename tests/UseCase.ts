@@ -20,6 +20,7 @@ export default class UseCase {
 
   public static PATH_SPORTS = this.BASE_PATH.concat('/sports');
   public static PATH_EVENTS = this.PATH_SPORTS.concat('/:id/events');
+  public static PATH_EVENT = this.PATH_SPORTS.concat('/:id/events/:eventId');
   public static PATH_EVENT_ENROLLMENT = this.PATH_SPORTS.concat('/:id/events/:eventId/enrollment');
 
   public static PATH_AUTH = this.BASE_PATH.concat('/auth');

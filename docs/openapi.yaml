@@ -214,6 +214,44 @@ paths:
           description: Sport discipline not found
 
   /sports/{disciplineID}/events/{eventID}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - events
+      summary: Get sport event
+      description: |
+        Get sport event with all necessary details.
+
+        Allowed roles: ```ADMIN```, ```USER```
+      operationId: getSportEvent
+      parameters:
+        - in: path
+          name: disciplineID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport discipline
+        - in: path
+          name: eventID
+          schema:
+            type: string
+          required: true
+          description: ID of the sport event
+      responses:
+        '200':
+          description: Sport event fetched successfuly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportEvent'
+        '401':
+          description: User couldn't be authenticated
+        '403':
+          description: User has not been authorized to access that resource
+        '404':
+          description: Sport discipline not found / Sport event not found
+
     put:
       security:
         - bearerAuth: []

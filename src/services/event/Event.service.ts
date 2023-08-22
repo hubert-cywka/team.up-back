@@ -20,6 +20,11 @@ class EventService {
     return this.eventRepository.findAllByDisciplineIdAndDate(id, date);
   };
 
+  public findOneById = async (eventId: string) => {
+    const result = await this.eventRepository.findById(eventId);
+    return result[0];
+  };
+
   public findById = async (id: string) => {
     return this.eventRepository.findById(id);
   };

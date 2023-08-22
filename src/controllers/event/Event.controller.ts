@@ -33,6 +33,12 @@ class EventController implements Controller {
   private initializeRoutes() {
     this.router
       .get(this.path.concat('/:id/events'), this.validateDisciplineExistence, this.getEventsFromDiscipline)
+      .get(
+        this.path.concat('/:id/events/:eventId'),
+        this.validateDisciplineExistence,
+        this.validateEventExistence,
+        this.getEventFromDisciplineById
+      )
       .post(
         this.path.concat('/:id/events'),
         authTokenValidation,
@@ -99,6 +105,10 @@ class EventController implements Controller {
   private getEventsFromDiscipline = async (request: Request, response: Response, next: NextFunction) => {
     const minimumStartDate = request.params.startDate ?? new Date().toISOString();
     response.send(await this.eventService.findAllByDisciplineIdAndDate(request.params.id, minimumStartDate));
+  };
+
+  private getEventFromDisciplineById = async (request: Request, response: Response, next: NextFunction) => {
+    response.send(await this.eventService.findOneById(request.params.eventId));
   };
 
   private createEvent = async (request: Request, response: Response, next: NextFunction) => {
