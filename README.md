@@ -1,13 +1,5 @@
 # Team.Up - backend, v.1.0.0
-
-<<<<<<< HEAD
 Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app)
-=======
-Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app)
-
-## Description
-
-> > > > > > > 8e957a3 (TU-31: Updated openapi and readme with deployment links)
 
 ## Description
 
