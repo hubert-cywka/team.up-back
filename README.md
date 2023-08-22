@@ -1,5 +1,4 @@
 # Team.Up - backend, v.1.0.0
-
 Deployed at: [team-up-back.vercel.app/app](team-up-back.vercel.app/app)
 
 ## Description

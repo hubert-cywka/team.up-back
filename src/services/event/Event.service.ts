@@ -16,8 +16,8 @@ class EventService {
     this.userEventRepository = userEventRepository;
   }
 
-  public findAllByDisciplineId = async (id: string) => {
-    return this.eventRepository.findAllByDisciplineId(id);
+  public findAllByDisciplineIdAndDate = async (id: string, date: string) => {
+    return this.eventRepository.findAllByDisciplineIdAndDate(id, date);
   };
 
   public findById = async (id: string) => {

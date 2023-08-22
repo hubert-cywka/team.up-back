@@ -7,10 +7,10 @@ import { DeleteResult } from 'mongodb';
 class EventRepository {
   private eventModel: Model<SportEvent> = SportEventModel;
 
-  public findAllByDisciplineId = (id: string) => {
+  public findAllByDisciplineIdAndDate = (id: string, date: string) => {
     return this.eventModel.aggregate([
       {
-        $match: { disciplineId: new mongoose.Types.ObjectId(id) }
+        $match: { $and: [{ disciplineId: new mongoose.Types.ObjectId(id) }, { startDate: { $gte: date } }] }
       },
       {
         $lookup: {
