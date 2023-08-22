@@ -147,6 +147,11 @@ paths:
             type: string
           required: true
           description: ID of the sport discipline
+        - in: query
+          name: startDate
+          schema:
+            type: string
+          description: Date in ISO format, defaults to current date, needed to filter older events
       description: |
         Get all available sport disciplines
 

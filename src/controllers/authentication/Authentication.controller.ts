@@ -3,7 +3,6 @@ import SignUpRequestBody from './dto/SignUpRequestBody.dto';
 import SignInRequestBody from './dto/SignInRequestBody.dto';
 import InvalidCredentialsResponse from './dto/InvalidCredentialsResponse.dto';
 import UserAlreadyExistsResponse from './dto/UserAlreadyExistsResponse.dto';
-import InvalidAuthTokenResponse from './dto/InvalidAuthTokenResponse.dto';
 import InvalidRefreshTokenResponse from './dto/InvalidRefreshTokenResponse.dto';
 import { Controller } from '../../shared/types/Controller';
 import AuthenticationService from '../../services/authentication/Authentication.service';

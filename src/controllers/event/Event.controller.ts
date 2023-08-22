@@ -97,7 +97,8 @@ class EventController implements Controller {
   };
 
   private getEventsFromDiscipline = async (request: Request, response: Response, next: NextFunction) => {
-    response.send(await this.eventService.findAllByDisciplineId(request.params.id));
+    const minimumStartDate = request.params.startDate ?? new Date().toISOString();
+    response.send(await this.eventService.findAllByDisciplineIdAndDate(request.params.id, minimumStartDate));
   };
 
   private createEvent = async (request: Request, response: Response, next: NextFunction) => {
